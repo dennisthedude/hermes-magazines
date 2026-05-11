@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XBM daily orchestrator architecture</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; padding:32px; background:#020617; color:#e5e7eb; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .wrap { max-width: 1180px; margin:0 auto; }
+    .header { margin-bottom:24px; }
+    .row { display:flex; align-items:center; gap:12px; }
+    .dot { width:12px; height:12px; border-radius:50%; background:#22d3ee; box-shadow:0 0 18px #22d3ee; }
+    h1 { font-size:24px; margin:0; }
+    .subtitle { color:#94a3b8; margin:8px 0 0 24px; font-size:14px; }
+    .panel { background:rgba(15,23,42,.72); border:1px solid #1e293b; border-radius:16px; padding:22px; margin:18px 0; }
+    svg { width:100%; min-width:980px; display:block; }
+    .cards { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:16px; }
+    .card { background:rgba(15,23,42,.72); border:1px solid #1e293b; border-radius:14px; padding:18px; }
+    .card h2 { font-size:15px; margin:0 0 10px 0; }
+    .card ul { margin:0; padding-left:18px; color:#94a3b8; font-size:12px; line-height:1.55; }
+    .path { color:#a78bfa; overflow-wrap:anywhere; }
+    .decision { border-color:#fbbf24; background:rgba(120,53,15,.18); }
+    .footer { color:#64748b; font-size:12px; text-align:center; margin-top:22px; }
+    code { color:#fbbf24; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="row"><div class="dot"></div><h1>X bookmarks daily orchestrator</h1></div>
+    <p class="subtitle">Én scheduled orchestrator: capture først, research etter verifisert completion — ikke tidsbasert 08:10-hack.</p>
+  </div>
+
+  <div class="panel">
+    <svg viewBox="0 0 1120 720" role="img" aria-label="X bookmarks orchestrator architecture diagram">
+      <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/></marker>
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/></pattern>
+      </defs>
+      <rect width="1120" height="720" fill="url(#grid)"/>
+
+      <!-- Boundaries -->
+      <rect x="30" y="40" width="1060" height="600" rx="16" fill="rgba(251,191,36,.05)" stroke="#fbbf24" stroke-dasharray="8 5"/>
+      <text x="48" y="64" fill="#fbbf24" font-size="11" font-weight="700">Hermes scheduled workflow boundary</text>
+
+      <rect x="190" y="95" width="730" height="350" rx="14" fill="rgba(6,78,59,.08)" stroke="#34d399" stroke-dasharray="6 4"/>
+      <text x="208" y="119" fill="#34d399" font-size="11" font-weight="700">Single orchestrator run</text>
+
+      <!-- Nodes -->
+      <rect x="60" y="210" width="110" height="62" rx="8" fill="rgba(30,41,59,.65)" stroke="#94a3b8" stroke-width="1.5"/>
+      <text x="115" y="235" fill="white" font-size="12" font-weight="700" text-anchor="middle">Cron</text>
+      <text x="115" y="253" fill="#94a3b8" font-size="9" text-anchor="middle">0 8 * * *</text>
+
+      <rect x="230" y="196" width="160" height="90" rx="8" fill="rgba(6,78,59,.42)" stroke="#34d399" stroke-width="1.5"/>
+      <text x="310" y="222" fill="white" font-size="12" font-weight="700" text-anchor="middle">Orchestrator</text>
+      <text x="310" y="242" fill="#94a3b8" font-size="9" text-anchor="middle">phase runner</text>
+      <text x="310" y="258" fill="#94a3b8" font-size="9" text-anchor="middle">owns daily status</text>
+
+      <rect x="450" y="95" width="170" height="74" rx="8" fill="rgba(136,19,55,.35)" stroke="#fb7185" stroke-width="1.5"/>
+      <text x="535" y="122" fill="white" font-size="12" font-weight="700" text-anchor="middle">X + Chrome CDP</text>
+      <text x="535" y="141" fill="#94a3b8" font-size="9" text-anchor="middle">read-only bookmarks</text>
+
+      <rect x="450" y="206" width="170" height="74" rx="8" fill="rgba(6,78,59,.42)" stroke="#34d399" stroke-width="1.5"/>
+      <text x="535" y="232" fill="white" font-size="12" font-weight="700" text-anchor="middle">Capture skill</text>
+      <text x="535" y="251" fill="#94a3b8" font-size="9" text-anchor="middle">x-bookmarks-digest</text>
+
+      <rect x="450" y="330" width="170" height="82" rx="8" fill="rgba(76,29,149,.42)" stroke="#a78bfa" stroke-width="1.5"/>
+      <text x="535" y="356" fill="white" font-size="12" font-weight="700" text-anchor="middle">Local inbox</text>
+      <text x="535" y="375" fill="#94a3b8" font-size="9" text-anchor="middle">captures / runs / state</text>
+      <text x="535" y="392" fill="#a78bfa" font-size="8" text-anchor="middle">ground truth files</text>
+
+      <rect x="690" y="205" width="170" height="82" rx="8" fill="rgba(120,53,15,.32)" stroke="#fbbf24" stroke-width="1.5"/>
+      <text x="775" y="232" fill="white" font-size="12" font-weight="700" text-anchor="middle">Completion gate</text>
+      <text x="775" y="251" fill="#94a3b8" font-size="9" text-anchor="middle">verify files, counts</text>
+      <text x="775" y="268" fill="#fbbf24" font-size="8" text-anchor="middle">no LLM trust fall</text>
+
+      <rect x="690" y="330" width="170" height="82" rx="8" fill="rgba(6,78,59,.42)" stroke="#34d399" stroke-width="1.5"/>
+      <text x="775" y="356" fill="white" font-size="12" font-weight="700" text-anchor="middle">Research skill</text>
+      <text x="775" y="375" fill="#94a3b8" font-size="9" text-anchor="middle">x-bookmarks-research-brief</text>
+      <text x="775" y="392" fill="#34d399" font-size="8" text-anchor="middle">only if new_captures &gt; 0</text>
+
+      <rect x="950" y="260" width="110" height="66" rx="8" fill="rgba(30,41,59,.65)" stroke="#94a3b8" stroke-width="1.5"/>
+      <text x="1005" y="285" fill="white" font-size="12" font-weight="700" text-anchor="middle">GBrain</text>
+      <text x="1005" y="304" fill="#94a3b8" font-size="9" text-anchor="middle">read-only lookup</text>
+
+      <rect x="650" y="500" width="150" height="74" rx="8" fill="rgba(76,29,149,.42)" stroke="#a78bfa" stroke-width="1.5"/>
+      <text x="725" y="526" fill="white" font-size="12" font-weight="700" text-anchor="middle">Report</text>
+      <text x="725" y="545" fill="#94a3b8" font-size="9" text-anchor="middle">Markdown research brief</text>
+
+      <rect x="835" y="500" width="150" height="74" rx="8" fill="rgba(8,51,68,.42)" stroke="#22d3ee" stroke-width="1.5"/>
+      <text x="910" y="526" fill="white" font-size="12" font-weight="700" text-anchor="middle">Action board</text>
+      <text x="910" y="545" fill="#94a3b8" font-size="9" text-anchor="middle">local copy/export only</text>
+
+      <rect x="415" y="500" width="170" height="74" rx="8" fill="rgba(30,41,59,.65)" stroke="#94a3b8" stroke-width="1.5"/>
+      <text x="500" y="526" fill="white" font-size="12" font-weight="700" text-anchor="middle">Discord status</text>
+      <text x="500" y="545" fill="#94a3b8" font-size="9" text-anchor="middle">short summary + paths</text>
+
+      <rect x="220" y="500" width="145" height="74" rx="8" fill="rgba(136,19,55,.28)" stroke="#fb7185" stroke-width="1.5"/>
+      <text x="292" y="526" fill="white" font-size="12" font-weight="700" text-anchor="middle">Failure status</text>
+      <text x="292" y="545" fill="#94a3b8" font-size="9" text-anchor="middle">phase + inspect path</text>
+
+      <!-- Arrows -->
+      <line x1="170" y1="241" x2="228" y2="241" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <line x1="390" y1="241" x2="448" y2="241" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <line x1="535" y1="169" x2="535" y2="204" stroke="#fb7185" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+      <line x1="535" y1="280" x2="535" y2="328" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <path d="M620 371 L650 371 Q675 371 675 246 L688 246" fill="none" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <line x1="775" y1="287" x2="775" y2="328" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <line x1="860" y1="371" x2="948" y2="303" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+      <line x1="775" y1="412" x2="725" y2="498" stroke="#a78bfa" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <line x1="800" y1="538" x2="833" y2="538" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <line x1="650" y1="538" x2="587" y2="538" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <path d="M690 246 Q515 460 365 538" fill="none" stroke="#fb7185" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+
+      <!-- Legend -->
+      <text x="60" y="665" fill="white" font-size="11" font-weight="700">Legend</text>
+      <rect x="60" y="678" width="14" height="10" rx="2" fill="rgba(6,78,59,.42)" stroke="#34d399"/><text x="82" y="687" fill="#94a3b8" font-size="9">agent/skill phase</text>
+      <rect x="200" y="678" width="14" height="10" rx="2" fill="rgba(76,29,149,.42)" stroke="#a78bfa"/><text x="222" y="687" fill="#94a3b8" font-size="9">local persisted artifact</text>
+      <rect x="390" y="678" width="14" height="10" rx="2" fill="rgba(120,53,15,.32)" stroke="#fbbf24"/><text x="412" y="687" fill="#94a3b8" font-size="9">gate/checkpoint</text>
+      <rect x="535" y="678" width="14" height="10" rx="2" fill="rgba(136,19,55,.28)" stroke="#fb7185"/><text x="557" y="687" fill="#94a3b8" font-size="9">failure/safety boundary</text>
+    </svg>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <h2>Level 1 — Architecture</h2>
+      <ul>
+        <li>One cron entry starts one orchestrator.</li>
+        <li>Capture writes local files and state.</li>
+        <li>Completion gate verifies files before research.</li>
+        <li>Research creates local Markdown + action board.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Level 2 — Contracts</h2>
+      <ul>
+        <li><code>xbm.capture.completed</code> internal event object.</li>
+        <li>Research keyed by <code>source_run</code> for idempotency.</li>
+        <li>Run-log mapping is source of truth for item numbers.</li>
+        <li>Partial captures are allowed, but must be explicit.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Safety boundaries</h2>
+      <ul>
+        <li>X/browser stays read-only.</li>
+        <li>GBrain lookup is read-only in research phase.</li>
+        <li>No GitHub publish or push.</li>
+        <li>No GBrain promotion without a separate explicit command.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel decision">
+    <h2 style="margin:0 0 12px 0;font-size:16px;color:#fbbf24">Decision checkpoint</h2>
+    <p style="color:#cbd5e1;font-size:13px;line-height:1.6;margin:0">
+      This is architecture only. No cron job, skill, scheduler config, GBrain page, or publishing workflow has been changed.
+      Recommended next step is approval/correction of this Level 1/2 architecture before writing an implementation plan or modifying job <code>060873fea125</code>.
+    </p>
+  </div>
+
+  <div class="panel">
+    <h2 style="font-size:16px;margin:0 0 12px 0">Public viewing note</h2>
+    <p style="font-size:12px;color:#94a3b8;line-height:1.7;margin:0">
+      This is a public, mobile-friendly review copy of the XBM orchestrator architecture. Local source paths have been removed.
+      The artifact is planning-only: it does not change cron jobs, GBrain, GitHub publishing workflows, or X/browser behavior.
+    </p>
+  </div>
+
+  <p class="footer">XBM orchestrator architecture • local-only planning artifact • no automation changed</p>
+</div>
+</body>
+</html>
