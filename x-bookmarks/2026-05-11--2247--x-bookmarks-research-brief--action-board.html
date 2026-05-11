@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>XBM Action Board · 2026-05-11--2247--x-bookmarks-research-brief</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #141a23;
+      --panel-2: #1b2330;
+      --text: #e8edf5;
+      --muted: #a7b1c2;
+      --subtle: #687386;
+      --line: #2a3444;
+      --accent: #7dd3fc;
+      --accent-2: #a78bfa;
+      --good: #86efac;
+      --warn: #fcd34d;
+      --bad: #fca5a5;
+      --shadow: 0 24px 80px rgba(0,0,0,.35);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: radial-gradient(circle at top left, rgba(125,211,252,.16), transparent 30rem), var(--bg); color: var(--text); font: 15px/1.55 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    a { color: var(--accent); }
+    code { color: #c4b5fd; background: rgba(167,139,250,.10); border: 1px solid rgba(167,139,250,.18); border-radius: .4rem; padding: .05rem .35rem; word-break: break-word; }
+    .shell { width: min(1220px, calc(100vw - 32px)); margin: 0 auto; padding: 32px 0 64px; }
+    header { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 22px; align-items: start; margin-bottom: 22px; }
+    .hero, .queue, .panel, .item-card { background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02)); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); }
+    .hero { padding: 28px; }
+    .eyebrow { color: var(--muted); text-transform: uppercase; letter-spacing: .12em; font-size: 12px; font-weight: 700; }
+    h1 { margin: 8px 0 12px; font-size: clamp(28px, 5vw, 54px); line-height: 1; letter-spacing: -.04em; }
+    h2 { margin: 4px 0 0; font-size: 22px; line-height: 1.16; letter-spacing: -.02em; }
+    h3 { margin-top: 1.2rem; }
+    .hero p { max-width: 78ch; color: var(--muted); }
+    .safety { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 18px; }
+    .safety div { background: rgba(134,239,172,.08); border: 1px solid rgba(134,239,172,.20); color: #d1fae5; padding: 10px 12px; border-radius: 14px; font-size: 13px; }
+    .queue { position: sticky; top: 16px; padding: 18px; }
+    .queue h2 { margin-bottom: 8px; }
+    .queue-output { min-height: 160px; max-height: 360px; overflow: auto; white-space: pre-wrap; background: #090c11; border: 1px solid var(--line); border-radius: 14px; padding: 12px; color: #d9e2f1; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12.5px; }
+    .queue-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+    button { appearance: none; border: 1px solid var(--line); background: var(--panel-2); color: var(--text); border-radius: 999px; min-height: 40px; padding: 8px 13px; font-weight: 700; cursor: pointer; transition: transform .12s ease, border-color .12s ease, background .12s ease; }
+    button:hover { transform: translateY(-1px); border-color: var(--accent); }
+    button.primary { background: linear-gradient(135deg, rgba(125,211,252,.25), rgba(167,139,250,.25)); border-color: rgba(125,211,252,.55); }
+    button.danger { color: #fecaca; border-color: rgba(252,165,165,.35); }
+    .main-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 22px; align-items: start; }
+    .content-stack { display: grid; gap: 18px; }
+    .panel { padding: 22px; }
+    .panel h2 { margin: 0 0 12px; }
+    .panel li, .analysis li { margin: .35rem 0; }
+    .item-card { padding: 20px; }
+    .item-head { display: flex; justify-content: space-between; gap: 16px; align-items: start; }
+    .bucket { flex: 0 0 auto; color: #fef9c3; background: rgba(252,211,77,.10); border: 1px solid rgba(252,211,77,.25); border-radius: 999px; padding: 6px 10px; font-size: 12px; font-weight: 800; }
+    .meta-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; margin: 16px 0; }
+    .meta-grid div { background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; padding: 10px; color: var(--muted); min-width: 0; }
+    .meta-grid span { display: block; color: var(--subtle); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; font-weight: 800; margin-bottom: 4px; }
+    .context-lines { color: var(--muted); }
+    .action-grid { display: grid; gap: 10px; padding: 14px 0 8px; }
+    .choice-group { background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.06); border-radius: 16px; padding: 10px; }
+    .choice-label { color: var(--text); font-size: 12px; text-transform: uppercase; letter-spacing: .09em; font-weight: 900; margin-bottom: 8px; }
+    .choice-label span { color: var(--subtle); text-transform: none; letter-spacing: 0; font-weight: 700; margin-left: 6px; }
+    .action-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .action-btn.primary { border-color: rgba(252,211,77,.28); }
+    .action-btn.modifier { border-style: dashed; }
+    .action-btn.suggested { border-color: rgba(125,211,252,.55); box-shadow: inset 0 0 0 1px rgba(125,211,252,.25); }
+    .action-btn.selected { background: linear-gradient(135deg, rgba(134,239,172,.24), rgba(125,211,252,.22)); border-color: rgba(134,239,172,.7); color: #f0fdf4; }
+    .note-label { display: block; color: var(--muted); font-weight: 700; margin-top: 8px; }
+    textarea { display: block; width: 100%; min-height: 64px; margin-top: 6px; resize: vertical; border-radius: 14px; border: 1px solid var(--line); background: #0a0e14; color: var(--text); padding: 10px 12px; font: inherit; }
+    details { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 12px; }
+    summary { cursor: pointer; color: var(--accent); font-weight: 800; }
+    .analysis { color: var(--muted); }
+    .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); padding: 12px 16px; background: #111827; border: 1px solid var(--line); border-radius: 999px; color: var(--text); box-shadow: var(--shadow); opacity: 0; pointer-events: none; transition: opacity .15s ease; }
+    .toast.show { opacity: 1; }
+    .small { color: var(--subtle); font-size: 13px; }
+    @media (max-width: 980px) {
+      header, .main-grid { grid-template-columns: 1fr; }
+      .queue { position: static; }
+      .safety, .meta-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div style="position:sticky;top:0;z-index:9999;background:#fcd34d;color:#111827;padding:10px 16px;font:600 14px/1.3 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;border-bottom:1px solid rgba(0,0,0,.2)">Mobile review copy · public GitHub Pages mirror · local filesystem paths stripped · no webhook / no GBrain mutation</div>
+
+  <div class="shell">
+    <header>
+      <section class="hero">
+        <div class="eyebrow">X Bookmarks · local action board</div>
+        <h1>Velg hva Hermes skal gjøre videre</h1>
+        <p>Dette er v1: knappene lager bare en kommando/JSON du kan kopiere tilbake til Hermes. Primary decision er én av Promote/Source only/Ignore; add-ons er multiple choice for Try later/Skillify/Deep research. No webhook, no network calls, no GBrain mutation.</p>
+        <div class="safety">
+          <div>Copy/export only</div>
+          <div>No webhook / no network</div>
+          <div>No GBrain mutation</div>
+        </div>
+      </section>
+      <aside class="queue" aria-label="Action queue">
+        <div class="eyebrow">Action queue</div>
+        <h2>Kopier til Hermes</h2>
+        <div id="queueOutput" class="queue-output">Velg en action på et item.</div>
+        <div class="queue-actions">
+          <button id="copyCommand" class="primary">Copy command</button>
+          <button id="copyJson">Copy JSON</button>
+          <button id="downloadJson">Download JSON</button>
+          <button id="clearActions" class="danger">Clear</button>
+        </div>
+        <p class="small">Tips: lim kommandoen rett inn i Discord/CLI. Hermes tolker det som intent queue og gjør jobben med vanlige sikkerhetsgrenser.</p>
+      </aside>
+    </header>
+
+    <main class="main-grid">
+      <div class="content-stack">
+        <section class="panel">
+          <h2>Executive summary</h2>
+          <ul>
+<li>Top signal: Graeme’s Auto-think / Auto-build article. It is not new territory for Dennis, but it is the cleanest concrete contract chain yet: research input → idea contract → intent/main review → bounded product/build plan → independent QA → trust/retention/operator receipts.</li>
+<li>What to read/test first: item 1 if Dennis wants to tighten Hermes orchestration; item 3 if he wants a reusable production-AI-app audit checklist.</li>
+<li>What to ignore or delay: item 2 until the video/repo/source behind “HudUI” is recovered. Right now it is mostly a visibility/dashboard argument plus coaching CTA. Useful idea, thin source.</li>
+<li>Biggest GBrain gap: no active canonical page for production AI app architecture covering RAG components, prompt registry, security, evaluation, observability, cost tracing, and agent-readable repo context as one checklist.</li>
+<li>GBrain note: MCP/CLI GBrain was unavailable in this cron context (<code>gbrain</code> not found; <code>bun</code> not found). I did not skip the required lookup; I searched and read <code>internal:brain</code> directly as the local GBrain source-of-truth.</li>
+</ul>
+        </section>
+        <section class="panel">
+          <h2>Top signals</h2>
+          <h3>1. How to Build a Hermes Agent That Finds Important Work and Builds It Autonomously — Graeme @gkisokay</h3>
+<ul>
+<li>Bucket: promote_to_gbrain_later</li>
+<li>Why it matters: This is the first captured source that connects Dennis’s XBM-style capture/research layer to a full build-governance loop. The useful bit is not “more agents”; it is receipts before autonomy.</li>
+<li>GBrain context: Strong overlap with <code>workflows/hermes-multi-profile-team-ops</code>, <code>concepts/task-routing-for-agent-work</code>, and <code>concepts/multi-agent-teams</code>.</li>
+<li>New vs known: Confirms existing separated-lane doctrine, but adds actionable schemas/artifacts: idea contract, intent review, main review, product plan, build plan, verification delta, trust report, retention review, operator summary.</li>
+<li>Source quality: High for a source bookmark. X capture is full; web search found the same article on Graeme’s Substack, and web extract confirmed the main structure.</li>
+<li>Recommended action: Later update the existing multi-profile/team-ops page or create a narrower <code>workflows/agent-buildroom-contract-chain.md</code>. Do not create a new cron or agent profile from this by default. That would be cargo-culting with paperwork.</li>
+<li>Confidence: high</li>
+</ul>
+        </section>
+        
+    <article class="item-card" id="item-1" data-item='{&quot;id&quot;: 1, &quot;title&quot;: &quot;How to Build a Hermes Agent That Finds Important Work and Builds It Autonomously&quot;, &quot;author&quot;: &quot;Graeme @gkisokay&quot;, &quot;capture_file&quot;: &quot;internal:x-bookmarks/captures/2026-05-11--graeme-autothink-autobuild-hermes-agent.md&quot;, &quot;status&quot;: &quot;captured_full&quot;, &quot;bucket&quot;: &quot;promote_to_gbrain_later&quot;, &quot;suggested_action_id&quot;: &quot;promote&quot;, &quot;heading&quot;: &quot;How to Build a Hermes Agent That Finds Important Work and Builds It Autonomously — Graeme @gkisokay&quot;, &quot;analysis_md&quot;: &quot;- **Capture:** internal:x-bookmarks/captures/2026-05-11--graeme-autothink-autobuild-hermes-agent.md\n- **Original source:** https://x.com/gkisokay/status/2053449921554960545; official/primary mirror found at https://gkisokay.substack.com/p/how-to-build-a-hermes-agent-that\n- **GBrain context:** Existing `workflows/hermes-multi-profile-team-ops` already says Dennis should not copy generic researcher+coder teams and should keep evidence, synthesis, and approved tasks separate. Existing `concepts/task-routing-for-agent-work` already says spec before swarm.\n- **New vs known:** New development / confirms existing brain context. The article extends previous Graeme material from evidence-vault architecture into a buildroom architecture with concrete durable handoffs.\n- **Facts:** Auto-think is idea intake; Auto-build is the verified build loop. Roles: Research, Dreamer, Main, Coder, QA, Trust, Retention, Operator. The loop includes idea contract, intent review, main review, bounded product plan, build plan, Coder verification, QA verification, delta, trust report, retention review, operator summary.\n- **Interpretation:** This is the most useful bookmark in the run. It is basically “make autonomy boring enough to audit,” which is exactly the right direction. The danger is overbuilding it: Dennis does not need seven live profiles just because the article names seven roles.\n- **Dennis relevance:** High for Hermes workflow architecture, XBM orchestration, GBrain source/canonical separation, and future local build queues. Medium for day-job context unless translated into practical operating cadence / approval gates.\n- **Suggested action:** Promote later or update existing GBrain page. Extract only the contract chain and receipt vocabulary; ignore private path names and stack-specific cosplay.\n- **Confidence:** high\n- **Sources:** local capture; `workflows/hermes-multi-profile-team-ops`; `sources/x-bookmarks/2026-05-06--graeme-multi-agent-hermes-research-vault`; `concepts/task-routing-for-agent-work`; Substack web extract.&quot;, &quot;capture&quot;: &quot;internal:x-bookmarks/captures/2026-05-11--graeme-autothink-autobuild-hermes-agent.md&quot;, &quot;original_source&quot;: &quot;https://x.com/gkisokay/status/2053449921554960545; official/primary mirror found at https://gkisokay.substack.com/p/how-to-build-a-hermes-agent-that&quot;, &quot;gbrain_context&quot;: &quot;Existing workflows/hermes-multi-profile-team-ops already says Dennis should not copy generic researcher+coder teams and should keep evidence, synthesis, and approved tasks separate. Existing concepts/task-routing-for-agent-work already says spec before swarm.&quot;, &quot;new_vs_known&quot;: &quot;New development / confirms existing brain context. The article extends previous Graeme material from evidence-vault architecture into a buildroom architecture with concrete durable handoffs.&quot;, &quot;facts&quot;: &quot;Auto-think is idea intake; Auto-build is the verified build loop. Roles: Research, Dreamer, Main, Coder, QA, Trust, Retention, Operator. The loop includes idea contract, intent review, main review, bounded product plan, build plan, Coder verification, QA verification, delta, trust report, retention review, operator summary.&quot;, &quot;interpretation&quot;: &quot;This is the most useful bookmark in the run. It is basically “make autonomy boring enough to audit,” which is exactly the right direction. The danger is overbuilding it: Dennis does not need seven live profiles just because the article names seven roles.&quot;, &quot;dennis_relevance&quot;: &quot;High for Hermes workflow architecture, XBM orchestration, GBrain source/canonical separation, and future local build queues. Medium for day-job context unless translated into practical operating cadence / approval gates.&quot;, &quot;suggested_action&quot;: &quot;Promote later or update existing GBrain page. Extract only the contract chain and receipt vocabulary; ignore private path names and stack-specific cosplay.&quot;, &quot;confidence&quot;: &quot;high&quot;, &quot;sources&quot;: &quot;local capture; workflows/hermes-multi-profile-team-ops; sources/x-bookmarks/2026-05-06--graeme-multi-agent-hermes-research-vault; concepts/task-routing-for-agent-work; Substack web extract.&quot;}'>
+      <div class="item-head">
+        <div>
+          <div class="eyebrow">Item 1 · Graeme @gkisokay</div>
+          <h2>How to Build a Hermes Agent That Finds Important Work and Builds It Autonomously</h2>
+        </div>
+        <div class="bucket">promote_to_gbrain_later</div>
+      </div>
+      <div class="meta-grid">
+        <div><span>Original</span><a href="https://x.com/gkisokay/status/2053449921554960545;" target="_blank" rel="noreferrer">https://x.com/gkisokay/status/2053449921554960545;</a> official/primary mirror found at <a href="https://gkisokay.substack.com/p/how-to-build-a-hermes-agent-that" target="_blank" rel="noreferrer">https://gkisokay.substack.com/p/how-to-build-a-hermes-agent-that</a></div>
+        <div><span>Capture</span><code>internal:x-bookmarks/captures/2026-05-11--graeme-autothink-autobuild-hermes-agent.md</code></div>
+        <div><span>Status</span>captured_full</div>
+        <div><span>Confidence</span>high</div>
+      </div>
+      <div class="context-lines">
+        <p><strong>GBrain:</strong> Existing workflows/hermes-multi-profile-team-ops already says Dennis should not copy generic researcher+coder teams and should keep evidence, synthesis, and approved tasks separate. Existing concepts/task-routing-for-agent-work already says spec before swarm.</p>
+        <p><strong>Dennis relevance:</strong> High for Hermes workflow architecture, XBM orchestration, GBrain source/canonical separation, and future local build queues. Medium for day-job context unless translated into practical operating cadence / approval gates.</p>
+        <p><strong>Suggested:</strong> Promote later or update existing GBrain page. Extract only the contract chain and receipt vocabulary; ignore private path names and stack-specific cosplay.</p>
+      </div>
+      <div class="action-grid" aria-label="Actions for item 1">
+        <div class="choice-group primary-choice">
+          <div class="choice-label">Primary decision <span>choose one</span></div>
+          <div class="action-row" role="radiogroup" aria-label="Primary action for item 1"><button class="action-btn primary suggested" data-item-id="1" data-action="promote" data-choice-kind="primary" title="Be Hermes prepare/promote this into GBrain after review.">Promote</button><button class="action-btn primary" data-item-id="1" data-action="source_only" data-choice-kind="primary" title="Keep as reference material; no canonical promotion.">Source only</button><button class="action-btn primary" data-item-id="1" data-action="ignore" data-choice-kind="primary" title="Mark as low-signal/archive; do not revisit unless asked.">Ignore</button></div>
+        </div>
+        <div class="choice-group modifier-choice">
+          <div class="choice-label">Add-ons <span>choose any</span></div>
+          <div class="action-row" role="group" aria-label="Add-on actions for item 1"><button class="action-btn modifier" data-item-id="1" data-action="try_later" data-choice-kind="modifier" title="Keep as a controlled spike/test candidate.">Test later</button><button class="action-btn modifier" data-item-id="1" data-action="skillify" data-choice-kind="modifier" title="Turn the reusable workflow into a Hermes skill draft.">Skillify</button><button class="action-btn modifier" data-item-id="1" data-action="deep_research" data-choice-kind="modifier" title="Ask Hermes to research this item properly with sources.">Deep research</button></div>
+        </div>
+      </div>
+      <label class="note-label">Optional note to Hermes
+        <textarea data-note-for="1" placeholder="Kort begrunnelse, f.eks. 'lag skill bare hvis dette matcher eksisterende browser/CDP workflow'"></textarea>
+      </label>
+      <details>
+        <summary>Vis analyse</summary>
+        <div class="analysis"><ul>
+<li><strong>Capture:</strong> internal:x-bookmarks/captures/2026-05-11--graeme-autothink-autobuild-hermes-agent.md</li>
+<li><strong>Original source:</strong> <a href="https://x.com/gkisokay/status/2053449921554960545;" target="_blank" rel="noreferrer">https://x.com/gkisokay/status/2053449921554960545;</a> official/primary mirror found at <a href="https://gkisokay.substack.com/p/how-to-build-a-hermes-agent-that" target="_blank" rel="noreferrer">https://gkisokay.substack.com/p/how-to-build-a-hermes-agent-that</a></li>
+<li><strong>GBrain context:</strong> Existing <code>workflows/hermes-multi-profile-team-ops</code> already says Dennis should not copy generic researcher+coder teams and should keep evidence, synthesis, and approved tasks separate. Existing <code>concepts/task-routing-for-agent-work</code> already says spec before swarm.</li>
+<li><strong>New vs known:</strong> New development / confirms existing brain context. The article extends previous Graeme material from evidence-vault architecture into a buildroom architecture with concrete durable handoffs.</li>
+<li><strong>Facts:</strong> Auto-think is idea intake; Auto-build is the verified build loop. Roles: Research, Dreamer, Main, Coder, QA, Trust, Retention, Operator. The loop includes idea contract, intent review, main review, bounded product plan, build plan, Coder verification, QA verification, delta, trust report, retention review, operator summary.</li>
+<li><strong>Interpretation:</strong> This is the most useful bookmark in the run. It is basically “make autonomy boring enough to audit,” which is exactly the right direction. The danger is overbuilding it: Dennis does not need seven live profiles just because the article names seven roles.</li>
+<li><strong>Dennis relevance:</strong> High for Hermes workflow architecture, XBM orchestration, GBrain source/canonical separation, and future local build queues. Medium for day-job context unless translated into practical operating cadence / approval gates.</li>
+<li><strong>Suggested action:</strong> Promote later or update existing GBrain page. Extract only the contract chain and receipt vocabulary; ignore private path names and stack-specific cosplay.</li>
+<li><strong>Confidence:</strong> high</li>
+<li><strong>Sources:</strong> local capture; <code>workflows/hermes-multi-profile-team-ops</code>; <code>sources/x-bookmarks/2026-05-06--graeme-multi-agent-hermes-research-vault</code>; <code>concepts/task-routing-for-agent-work</code>; Substack web extract.</li>
+</ul></div>
+      </details>
+    </article>
+    
+
+    <article class="item-card" id="item-2" data-item='{&quot;id&quot;: 2, &quot;title&quot;: &quot;Hermes Agent HudUI (2026): The New Mission Control For Agents&quot;, &quot;author&quot;: &quot;Julian Goldie SEO @JulianGoldieSEO&quot;, &quot;capture_file&quot;: &quot;internal:x-bookmarks/captures/2026-05-11--julian-goldie-hermes-agent-hudui.md&quot;, &quot;status&quot;: &quot;captured_partial&quot;, &quot;bucket&quot;: &quot;needs_more_context&quot;, &quot;suggested_action_id&quot;: &quot;deep_research&quot;, &quot;heading&quot;: &quot;Hermes Agent HudUI (2026): The New Mission Control For Agents — Julian Goldie SEO @JulianGoldieSEO&quot;, &quot;analysis_md&quot;: &quot;- **Capture:** internal:x-bookmarks/captures/2026-05-11--julian-goldie-hermes-agent-hudui.md\n- **Original source:** https://x.com/JulianGoldieSEO/status/2053270462520791381; embedded video post https://x.com/JulianGoldieSEO/status/2053251872086237321; first same-author reply https://x.com/JulianGoldieSEO/status/2053251874237870238\n- **GBrain context:** GBrain has adjacent notes about Hermes dashboards, Workspace, scheduled tasks, gateway/dashboard startup, and agent visibility, but no `HudUI` page and no technical record of this tool.\n- **New vs known:** Brain gap / needs more context. The broad need for visibility is known; the specific HudUI artifact is not verified.\n- **Facts:** Captured article claims HudUI is a browser-based dashboard for live agents, chat sessions, scheduled tasks, broken tools, model settings, plugins, health checks, gateways, sessions, and diagnostics. Article contrasts HudUI with Hermes Workspace. Capture is partial because the 8:34 embedded X video was not transcribed.\n- **Interpretation:** The idea is sane — dashboards are where cron failures stop hiding in logs — but the source is promotional and light on technical substance. Web search surfaced Julian/LinkedIn promotional fragments, not an official repo or docs. Treat as a lead, not evidence.\n- **Dennis relevance:** Medium if the actual tool exists and works with Dennis’s Hermes setup; low until a repo/docs/video transcript is recovered. Dennis already uses Hermes CLI and has dashboard/workspace context, so “browser UI good” is not a revelation.\n- **Suggested action:** Deep research only if Dennis cares about HudUI specifically. Otherwise keep as source reference; do not promote now.\n- **Confidence:** moderate on captured claims; low on tool substance.\n- **Sources:** local capture; web search for “Hermes Agent HudUI GitHub”; `sources/hindsight` dashboard/workspace memories; `workflows/hermes-agent-use-cases-and-agent-crew-design`.&quot;, &quot;capture&quot;: &quot;internal:x-bookmarks/captures/2026-05-11--julian-goldie-hermes-agent-hudui.md&quot;, &quot;original_source&quot;: &quot;https://x.com/JulianGoldieSEO/status/2053270462520791381; embedded video post https://x.com/JulianGoldieSEO/status/2053251872086237321; first same-author reply https://x.com/JulianGoldieSEO/status/2053251874237870238&quot;, &quot;gbrain_context&quot;: &quot;GBrain has adjacent notes about Hermes dashboards, Workspace, scheduled tasks, gateway/dashboard startup, and agent visibility, but no HudUI page and no technical record of this tool.&quot;, &quot;new_vs_known&quot;: &quot;Brain gap / needs more context. The broad need for visibility is known; the specific HudUI artifact is not verified.&quot;, &quot;facts&quot;: &quot;Captured article claims HudUI is a browser-based dashboard for live agents, chat sessions, scheduled tasks, broken tools, model settings, plugins, health checks, gateways, sessions, and diagnostics. Article contrasts HudUI with Hermes Workspace. Capture is partial because the 8:34 embedded X video was not transcribed.&quot;, &quot;interpretation&quot;: &quot;The idea is sane — dashboards are where cron failures stop hiding in logs — but the source is promotional and light on technical substance. Web search surfaced Julian/LinkedIn promotional fragments, not an official repo or docs. Treat as a lead, not evidence.&quot;, &quot;dennis_relevance&quot;: &quot;Medium if the actual tool exists and works with Dennis’s Hermes setup; low until a repo/docs/video transcript is recovered. Dennis already uses Hermes CLI and has dashboard/workspace context, so “browser UI good” is not a revelation.&quot;, &quot;suggested_action&quot;: &quot;Deep research only if Dennis cares about HudUI specifically. Otherwise keep as source reference; do not promote now.&quot;, &quot;confidence&quot;: &quot;moderate on captured claims; low on tool substance.&quot;, &quot;sources&quot;: &quot;local capture; web search for “Hermes Agent HudUI GitHub”; sources/hindsight dashboard/workspace memories; workflows/hermes-agent-use-cases-and-agent-crew-design.&quot;}'>
+      <div class="item-head">
+        <div>
+          <div class="eyebrow">Item 2 · Julian Goldie SEO @JulianGoldieSEO</div>
+          <h2>Hermes Agent HudUI (2026): The New Mission Control For Agents</h2>
+        </div>
+        <div class="bucket">needs_more_context</div>
+      </div>
+      <div class="meta-grid">
+        <div><span>Original</span><a href="https://x.com/JulianGoldieSEO/status/2053270462520791381;" target="_blank" rel="noreferrer">https://x.com/JulianGoldieSEO/status/2053270462520791381;</a> embedded video post <a href="https://x.com/JulianGoldieSEO/status/2053251872086237321;" target="_blank" rel="noreferrer">https://x.com/JulianGoldieSEO/status/2053251872086237321;</a> first same-author reply <a href="https://x.com/JulianGoldieSEO/status/2053251874237870238" target="_blank" rel="noreferrer">https://x.com/JulianGoldieSEO/status/2053251874237870238</a></div>
+        <div><span>Capture</span><code>internal:x-bookmarks/captures/2026-05-11--julian-goldie-hermes-agent-hudui.md</code></div>
+        <div><span>Status</span>captured_partial</div>
+        <div><span>Confidence</span>moderate on captured claims; low on tool substance.</div>
+      </div>
+      <div class="context-lines">
+        <p><strong>GBrain:</strong> GBrain has adjacent notes about Hermes dashboards, Workspace, scheduled tasks, gateway/dashboard startup, and agent visibility, but no HudUI page and no technical record of this tool.</p>
+        <p><strong>Dennis relevance:</strong> Medium if the actual tool exists and works with Dennis’s Hermes setup; low until a repo/docs/video transcript is recovered. Dennis already uses Hermes CLI and has dashboard/workspace context, so “browser UI good” is not a revelation.</p>
+        <p><strong>Suggested:</strong> Deep research only if Dennis cares about HudUI specifically. Otherwise keep as source reference; do not promote now.</p>
+      </div>
+      <div class="action-grid" aria-label="Actions for item 2">
+        <div class="choice-group primary-choice">
+          <div class="choice-label">Primary decision <span>choose one</span></div>
+          <div class="action-row" role="radiogroup" aria-label="Primary action for item 2"><button class="action-btn primary" data-item-id="2" data-action="promote" data-choice-kind="primary" title="Be Hermes prepare/promote this into GBrain after review.">Promote</button><button class="action-btn primary" data-item-id="2" data-action="source_only" data-choice-kind="primary" title="Keep as reference material; no canonical promotion.">Source only</button><button class="action-btn primary" data-item-id="2" data-action="ignore" data-choice-kind="primary" title="Mark as low-signal/archive; do not revisit unless asked.">Ignore</button></div>
+        </div>
+        <div class="choice-group modifier-choice">
+          <div class="choice-label">Add-ons <span>choose any</span></div>
+          <div class="action-row" role="group" aria-label="Add-on actions for item 2"><button class="action-btn modifier" data-item-id="2" data-action="try_later" data-choice-kind="modifier" title="Keep as a controlled spike/test candidate.">Test later</button><button class="action-btn modifier" data-item-id="2" data-action="skillify" data-choice-kind="modifier" title="Turn the reusable workflow into a Hermes skill draft.">Skillify</button><button class="action-btn modifier suggested" data-item-id="2" data-action="deep_research" data-choice-kind="modifier" title="Ask Hermes to research this item properly with sources.">Deep research</button></div>
+        </div>
+      </div>
+      <label class="note-label">Optional note to Hermes
+        <textarea data-note-for="2" placeholder="Kort begrunnelse, f.eks. 'lag skill bare hvis dette matcher eksisterende browser/CDP workflow'"></textarea>
+      </label>
+      <details>
+        <summary>Vis analyse</summary>
+        <div class="analysis"><ul>
+<li><strong>Capture:</strong> internal:x-bookmarks/captures/2026-05-11--julian-goldie-hermes-agent-hudui.md</li>
+<li><strong>Original source:</strong> <a href="https://x.com/JulianGoldieSEO/status/2053270462520791381;" target="_blank" rel="noreferrer">https://x.com/JulianGoldieSEO/status/2053270462520791381;</a> embedded video post <a href="https://x.com/JulianGoldieSEO/status/2053251872086237321;" target="_blank" rel="noreferrer">https://x.com/JulianGoldieSEO/status/2053251872086237321;</a> first same-author reply <a href="https://x.com/JulianGoldieSEO/status/2053251874237870238" target="_blank" rel="noreferrer">https://x.com/JulianGoldieSEO/status/2053251874237870238</a></li>
+<li><strong>GBrain context:</strong> GBrain has adjacent notes about Hermes dashboards, Workspace, scheduled tasks, gateway/dashboard startup, and agent visibility, but no <code>HudUI</code> page and no technical record of this tool.</li>
+<li><strong>New vs known:</strong> Brain gap / needs more context. The broad need for visibility is known; the specific HudUI artifact is not verified.</li>
+<li><strong>Facts:</strong> Captured article claims HudUI is a browser-based dashboard for live agents, chat sessions, scheduled tasks, broken tools, model settings, plugins, health checks, gateways, sessions, and diagnostics. Article contrasts HudUI with Hermes Workspace. Capture is partial because the 8:34 embedded X video was not transcribed.</li>
+<li><strong>Interpretation:</strong> The idea is sane — dashboards are where cron failures stop hiding in logs — but the source is promotional and light on technical substance. Web search surfaced Julian/LinkedIn promotional fragments, not an official repo or docs. Treat as a lead, not evidence.</li>
+<li><strong>Dennis relevance:</strong> Medium if the actual tool exists and works with Dennis’s Hermes setup; low until a repo/docs/video transcript is recovered. Dennis already uses Hermes CLI and has dashboard/workspace context, so “browser UI good” is not a revelation.</li>
+<li><strong>Suggested action:</strong> Deep research only if Dennis cares about HudUI specifically. Otherwise keep as source reference; do not promote now.</li>
+<li><strong>Confidence:</strong> moderate on captured claims; low on tool substance.</li>
+<li><strong>Sources:</strong> local capture; web search for “Hermes Agent HudUI GitHub”; <code>sources/hindsight</code> dashboard/workspace memories; <code>workflows/hermes-agent-use-cases-and-agent-crew-design</code>.</li>
+</ul></div>
+      </details>
+    </article>
+    
+
+    <article class="item-card" id="item-3" data-item='{&quot;id&quot;: 3, &quot;title&quot;: &quot;9-layer AI production architecture&quot;, &quot;author&quot;: &quot;Tech with Mak @techNmak&quot;, &quot;capture_file&quot;: &quot;internal:x-bookmarks/captures/2026-05-11--tech-with-mak-ai-production-architecture.md&quot;, &quot;status&quot;: &quot;captured_full&quot;, &quot;bucket&quot;: &quot;make_skill_later&quot;, &quot;suggested_action_id&quot;: &quot;skillify&quot;, &quot;heading&quot;: &quot;9-layer AI production architecture — Tech with Mak @techNmak&quot;, &quot;analysis_md&quot;: &quot;- **Capture:** internal:x-bookmarks/captures/2026-05-11--tech-with-mak-ai-production-architecture.md\n- **Original source:** https://x.com/techNmak/status/2052621789478703584; recovered media image https://pbs.twimg.com/media/HHxgo7CbIAAvnqa.jpg?name=large\n- **GBrain context:** `workflows/agent-readable-folder-instructions` covers AGENTS/CLAUDE/context files. GBrain has local-AI/RAG-ish source notes, but no canonical production-AI-app architecture checklist combining RAG services, prompt registry, security, eval, observability, tests/docs, and agent context.\n- **New vs known:** Brain gap / skill candidate. The individual parts are familiar; the compact checklist shape is the value.\n- **Facts:** The source argues production AI apps should separate retrieval components, services, prompts, agents/tools, input/content/output security guards, evaluation, observability/cost tracking, data lifecycle, scripts, frontend, tests, docs, and `.claude`/`CLAUDE.md`/`AGENTS.md` context.\n- **Interpretation:** Strong as a checklist, weak as authority. There is no linked original source behind the screenshot; web search found reposts and fragments, not a solid official page. Still, the architecture is sensible and testable.\n- **Dennis relevance:** Medium-high if converted into a reusable review skill/checklist for AI app repos. Lower if treated as yet another pretty architecture screenshot.\n- **Suggested action:** Make skill later: `production-ai-app-architecture-audit` or fold into an existing code/repo review workflow. Use it as a checklist, not doctrine.\n- **Confidence:** high on captured screenshot contents; moderate on usefulness; low on provenance beyond X/media.\n- **Sources:** local capture; `workflows/agent-readable-folder-instructions`; web searches for `production-ai-app`, `academy.neosage.io`, and file names from the screenshot.&quot;, &quot;capture&quot;: &quot;internal:x-bookmarks/captures/2026-05-11--tech-with-mak-ai-production-architecture.md&quot;, &quot;original_source&quot;: &quot;https://x.com/techNmak/status/2052621789478703584; recovered media image https://pbs.twimg.com/media/HHxgo7CbIAAvnqa.jpg?name=large&quot;, &quot;gbrain_context&quot;: &quot;workflows/agent-readable-folder-instructions covers AGENTS/CLAUDE/context files. GBrain has local-AI/RAG-ish source notes, but no canonical production-AI-app architecture checklist combining RAG services, prompt registry, security, eval, observability, tests/docs, and agent context.&quot;, &quot;new_vs_known&quot;: &quot;Brain gap / skill candidate. The individual parts are familiar; the compact checklist shape is the value.&quot;, &quot;facts&quot;: &quot;The source argues production AI apps should separate retrieval components, services, prompts, agents/tools, input/content/output security guards, evaluation, observability/cost tracking, data lifecycle, scripts, frontend, tests, docs, and .claude/CLAUDE.md/AGENTS.md context.&quot;, &quot;interpretation&quot;: &quot;Strong as a checklist, weak as authority. There is no linked original source behind the screenshot; web search found reposts and fragments, not a solid official page. Still, the architecture is sensible and testable.&quot;, &quot;dennis_relevance&quot;: &quot;Medium-high if converted into a reusable review skill/checklist for AI app repos. Lower if treated as yet another pretty architecture screenshot.&quot;, &quot;suggested_action&quot;: &quot;Make skill later: production-ai-app-architecture-audit or fold into an existing code/repo review workflow. Use it as a checklist, not doctrine.&quot;, &quot;confidence&quot;: &quot;high on captured screenshot contents; moderate on usefulness; low on provenance beyond X/media.&quot;, &quot;sources&quot;: &quot;local capture; workflows/agent-readable-folder-instructions; web searches for production-ai-app, academy.neosage.io, and file names from the screenshot.&quot;}'>
+      <div class="item-head">
+        <div>
+          <div class="eyebrow">Item 3 · Tech with Mak @techNmak</div>
+          <h2>9-layer AI production architecture</h2>
+        </div>
+        <div class="bucket">make_skill_later</div>
+      </div>
+      <div class="meta-grid">
+        <div><span>Original</span><a href="https://x.com/techNmak/status/2052621789478703584;" target="_blank" rel="noreferrer">https://x.com/techNmak/status/2052621789478703584;</a> recovered media image <a href="https://pbs.twimg.com/media/HHxgo7CbIAAvnqa.jpg?name=large" target="_blank" rel="noreferrer">https://pbs.twimg.com/media/HHxgo7CbIAAvnqa.jpg?name=large</a></div>
+        <div><span>Capture</span><code>internal:x-bookmarks/captures/2026-05-11--tech-with-mak-ai-production-architecture.md</code></div>
+        <div><span>Status</span>captured_full</div>
+        <div><span>Confidence</span>high on captured screenshot contents; moderate on usefulness; low on provenance beyond X/media.</div>
+      </div>
+      <div class="context-lines">
+        <p><strong>GBrain:</strong> workflows/agent-readable-folder-instructions covers AGENTS/CLAUDE/context files. GBrain has local-AI/RAG-ish source notes, but no canonical production-AI-app architecture checklist combining RAG services, prompt registry, security, eval, observability, tests/docs, and agent context.</p>
+        <p><strong>Dennis relevance:</strong> Medium-high if converted into a reusable review skill/checklist for AI app repos. Lower if treated as yet another pretty architecture screenshot.</p>
+        <p><strong>Suggested:</strong> Make skill later: production-ai-app-architecture-audit or fold into an existing code/repo review workflow. Use it as a checklist, not doctrine.</p>
+      </div>
+      <div class="action-grid" aria-label="Actions for item 3">
+        <div class="choice-group primary-choice">
+          <div class="choice-label">Primary decision <span>choose one</span></div>
+          <div class="action-row" role="radiogroup" aria-label="Primary action for item 3"><button class="action-btn primary" data-item-id="3" data-action="promote" data-choice-kind="primary" title="Be Hermes prepare/promote this into GBrain after review.">Promote</button><button class="action-btn primary" data-item-id="3" data-action="source_only" data-choice-kind="primary" title="Keep as reference material; no canonical promotion.">Source only</button><button class="action-btn primary" data-item-id="3" data-action="ignore" data-choice-kind="primary" title="Mark as low-signal/archive; do not revisit unless asked.">Ignore</button></div>
+        </div>
+        <div class="choice-group modifier-choice">
+          <div class="choice-label">Add-ons <span>choose any</span></div>
+          <div class="action-row" role="group" aria-label="Add-on actions for item 3"><button class="action-btn modifier" data-item-id="3" data-action="try_later" data-choice-kind="modifier" title="Keep as a controlled spike/test candidate.">Test later</button><button class="action-btn modifier suggested" data-item-id="3" data-action="skillify" data-choice-kind="modifier" title="Turn the reusable workflow into a Hermes skill draft.">Skillify</button><button class="action-btn modifier" data-item-id="3" data-action="deep_research" data-choice-kind="modifier" title="Ask Hermes to research this item properly with sources.">Deep research</button></div>
+        </div>
+      </div>
+      <label class="note-label">Optional note to Hermes
+        <textarea data-note-for="3" placeholder="Kort begrunnelse, f.eks. 'lag skill bare hvis dette matcher eksisterende browser/CDP workflow'"></textarea>
+      </label>
+      <details>
+        <summary>Vis analyse</summary>
+        <div class="analysis"><ul>
+<li><strong>Capture:</strong> internal:x-bookmarks/captures/2026-05-11--tech-with-mak-ai-production-architecture.md</li>
+<li><strong>Original source:</strong> <a href="https://x.com/techNmak/status/2052621789478703584;" target="_blank" rel="noreferrer">https://x.com/techNmak/status/2052621789478703584;</a> recovered media image <a href="https://pbs.twimg.com/media/HHxgo7CbIAAvnqa.jpg?name=large" target="_blank" rel="noreferrer">https://pbs.twimg.com/media/HHxgo7CbIAAvnqa.jpg?name=large</a></li>
+<li><strong>GBrain context:</strong> <code>workflows/agent-readable-folder-instructions</code> covers AGENTS/CLAUDE/context files. GBrain has local-AI/RAG-ish source notes, but no canonical production-AI-app architecture checklist combining RAG services, prompt registry, security, eval, observability, tests/docs, and agent context.</li>
+<li><strong>New vs known:</strong> Brain gap / skill candidate. The individual parts are familiar; the compact checklist shape is the value.</li>
+<li><strong>Facts:</strong> The source argues production AI apps should separate retrieval components, services, prompts, agents/tools, input/content/output security guards, evaluation, observability/cost tracking, data lifecycle, scripts, frontend, tests, docs, and <code>.claude</code>/<code>CLAUDE.md</code>/<code>AGENTS.md</code> context.</li>
+<li><strong>Interpretation:</strong> Strong as a checklist, weak as authority. There is no linked original source behind the screenshot; web search found reposts and fragments, not a solid official page. Still, the architecture is sensible and testable.</li>
+<li><strong>Dennis relevance:</strong> Medium-high if converted into a reusable review skill/checklist for AI app repos. Lower if treated as yet another pretty architecture screenshot.</li>
+<li><strong>Suggested action:</strong> Make skill later: <code>production-ai-app-architecture-audit</code> or fold into an existing code/repo review workflow. Use it as a checklist, not doctrine.</li>
+<li><strong>Confidence:</strong> high on captured screenshot contents; moderate on usefulness; low on provenance beyond X/media.</li>
+<li><strong>Sources:</strong> local capture; <code>workflows/agent-readable-folder-instructions</code>; web searches for <code>production-ai-app</code>, <code>academy.neosage.io</code>, and file names from the screenshot.</li>
+</ul></div>
+      </details>
+    </article>
+    
+        <section class="panel">
+          <h2>Open questions</h2>
+          <ul>
+<li>Does the HudUI item refer to an actual open-source project, a fork, a product, or just a promotional video demo?</li>
+<li>Does Graeme’s buildroom article have a public repo linked somewhere outside the captured X/Substack text?</li>
+<li>Should Dennis’s GBrain get a canonical “production AI app architecture checklist,” or is that better as a Hermes skill only?</li>
+</ul>
+        </section>
+      </div>
+      <aside class="panel">
+        <h2>Report metadata</h2>
+        <p><strong>Report:</strong><br><code>internal:x-bookmarks/research/2026-05-11--2247--x-bookmarks-research-brief.md</code></p>
+        <p><strong>Source run:</strong><br><code>internal:x-bookmarks/runs/2026-05-11--060873fea125.md</code></p>
+        <p><strong>Items:</strong> 3</p>
+        <p class="small">Public/sanitized publishing must strip these local paths. Lokal rapport kan være ærlig; public rapport må være kledd på.</p>
+      </aside>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script>
+    const XBM_DATA = {
+  "meta": {
+    "report_id": "2026-05-11--2247--x-bookmarks-research-brief",
+    "report_path": "internal:x-bookmarks/research/2026-05-11--2247--x-bookmarks-research-brief.md",
+    "source_run": "internal:x-bookmarks/runs/2026-05-11--060873fea125.md",
+    "latest_run_checked": null,
+    "items_analyzed": "3",
+    "generated_at": "2026-05-11T20:52:57.247453+00:00",
+    "mode": "local_action_board_copy_only"
+  },
+  "items": [
+    {
+      "id": 1,
+      "title": "How to Build a Hermes Agent That Finds Important Work and Builds It Autonomously",
+      "author": "Graeme @gkisokay",
+      "capture_file": "internal:x-bookmarks/captures/2026-05-11--graeme-autothink-autobuild-hermes-agent.md",
+      "status": "captured_full",
+      "bucket": "promote_to_gbrain_later",
+      "suggested_action_id": "promote",
+      "heading": "How to Build a Hermes Agent That Finds Important Work and Builds It Autonomously — Graeme @gkisokay",
+      "analysis_md": "- **Capture:** internal:x-bookmarks/captures/2026-05-11--graeme-autothink-autobuild-hermes-agent.md\n- **Original source:** https://x.com/gkisokay/status/2053449921554960545; official/primary mirror found at https://gkisokay.substack.com/p/how-to-build-a-hermes-agent-that\n- **GBrain context:** Existing `workflows/hermes-multi-profile-team-ops` already says Dennis should not copy generic researcher+coder teams and should keep evidence, synthesis, and approved tasks separate. Existing `concepts/task-routing-for-agent-work` already says spec before swarm.\n- **New vs known:** New development / confirms existing brain context. The article extends previous Graeme material from evidence-vault architecture into a buildroom architecture with concrete durable handoffs.\n- **Facts:** Auto-think is idea intake; Auto-build is the verified build loop. Roles: Research, Dreamer, Main, Coder, QA, Trust, Retention, Operator. The loop includes idea contract, intent review, main review, bounded product plan, build plan, Coder verification, QA verification, delta, trust report, retention review, operator summary.\n- **Interpretation:** This is the most useful bookmark in the run. It is basically “make autonomy boring enough to audit,” which is exactly the right direction. The danger is overbuilding it: Dennis does not need seven live profiles just because the article names seven roles.\n- **Dennis relevance:** High for Hermes workflow architecture, XBM orchestration, GBrain source/canonical separation, and future local build queues. Medium for day-job context unless translated into practical operating cadence / approval gates.\n- **Suggested action:** Promote later or update existing GBrain page. Extract only the contract chain and receipt vocabulary; ignore private path names and stack-specific cosplay.\n- **Confidence:** high\n- **Sources:** local capture; `workflows/hermes-multi-profile-team-ops`; `sources/x-bookmarks/2026-05-06--graeme-multi-agent-hermes-research-vault`; `concepts/task-routing-for-agent-work`; Substack web extract.",
+      "capture": "internal:x-bookmarks/captures/2026-05-11--graeme-autothink-autobuild-hermes-agent.md",
+      "original_source": "https://x.com/gkisokay/status/2053449921554960545; official/primary mirror found at https://gkisokay.substack.com/p/how-to-build-a-hermes-agent-that",
+      "gbrain_context": "Existing workflows/hermes-multi-profile-team-ops already says Dennis should not copy generic researcher+coder teams and should keep evidence, synthesis, and approved tasks separate. Existing concepts/task-routing-for-agent-work already says spec before swarm.",
+      "new_vs_known": "New development / confirms existing brain context. The article extends previous Graeme material from evidence-vault architecture into a buildroom architecture with concrete durable handoffs.",
+      "facts": "Auto-think is idea intake; Auto-build is the verified build loop. Roles: Research, Dreamer, Main, Coder, QA, Trust, Retention, Operator. The loop includes idea contract, intent review, main review, bounded product plan, build plan, Coder verification, QA verification, delta, trust report, retention review, operator summary.",
+      "interpretation": "This is the most useful bookmark in the run. It is basically “make autonomy boring enough to audit,” which is exactly the right direction. The danger is overbuilding it: Dennis does not need seven live profiles just because the article names seven roles.",
+      "dennis_relevance": "High for Hermes workflow architecture, XBM orchestration, GBrain source/canonical separation, and future local build queues. Medium for day-job context unless translated into practical operating cadence / approval gates.",
+      "suggested_action": "Promote later or update existing GBrain page. Extract only the contract chain and receipt vocabulary; ignore private path names and stack-specific cosplay.",
+      "confidence": "high",
+      "sources": "local capture; workflows/hermes-multi-profile-team-ops; sources/x-bookmarks/2026-05-06--graeme-multi-agent-hermes-research-vault; concepts/task-routing-for-agent-work; Substack web extract."
+    },
+    {
+      "id": 2,
+      "title": "Hermes Agent HudUI (2026): The New Mission Control For Agents",
+      "author": "Julian Goldie SEO @JulianGoldieSEO",
+      "capture_file": "internal:x-bookmarks/captures/2026-05-11--julian-goldie-hermes-agent-hudui.md",
+      "status": "captured_partial",
+      "bucket": "needs_more_context",
+      "suggested_action_id": "deep_research",
+      "heading": "Hermes Agent HudUI (2026): The New Mission Control For Agents — Julian Goldie SEO @JulianGoldieSEO",
+      "analysis_md": "- **Capture:** internal:x-bookmarks/captures/2026-05-11--julian-goldie-hermes-agent-hudui.md\n- **Original source:** https://x.com/JulianGoldieSEO/status/2053270462520791381; embedded video post https://x.com/JulianGoldieSEO/status/2053251872086237321; first same-author reply https://x.com/JulianGoldieSEO/status/2053251874237870238\n- **GBrain context:** GBrain has adjacent notes about Hermes dashboards, Workspace, scheduled tasks, gateway/dashboard startup, and agent visibility, but no `HudUI` page and no technical record of this tool.\n- **New vs known:** Brain gap / needs more context. The broad need for visibility is known; the specific HudUI artifact is not verified.\n- **Facts:** Captured article claims HudUI is a browser-based dashboard for live agents, chat sessions, scheduled tasks, broken tools, model settings, plugins, health checks, gateways, sessions, and diagnostics. Article contrasts HudUI with Hermes Workspace. Capture is partial because the 8:34 embedded X video was not transcribed.\n- **Interpretation:** The idea is sane — dashboards are where cron failures stop hiding in logs — but the source is promotional and light on technical substance. Web search surfaced Julian/LinkedIn promotional fragments, not an official repo or docs. Treat as a lead, not evidence.\n- **Dennis relevance:** Medium if the actual tool exists and works with Dennis’s Hermes setup; low until a repo/docs/video transcript is recovered. Dennis already uses Hermes CLI and has dashboard/workspace context, so “browser UI good” is not a revelation.\n- **Suggested action:** Deep research only if Dennis cares about HudUI specifically. Otherwise keep as source reference; do not promote now.\n- **Confidence:** moderate on captured claims; low on tool substance.\n- **Sources:** local capture; web search for “Hermes Agent HudUI GitHub”; `sources/hindsight` dashboard/workspace memories; `workflows/hermes-agent-use-cases-and-agent-crew-design`.",
+      "capture": "internal:x-bookmarks/captures/2026-05-11--julian-goldie-hermes-agent-hudui.md",
+      "original_source": "https://x.com/JulianGoldieSEO/status/2053270462520791381; embedded video post https://x.com/JulianGoldieSEO/status/2053251872086237321; first same-author reply https://x.com/JulianGoldieSEO/status/2053251874237870238",
+      "gbrain_context": "GBrain has adjacent notes about Hermes dashboards, Workspace, scheduled tasks, gateway/dashboard startup, and agent visibility, but no HudUI page and no technical record of this tool.",
+      "new_vs_known": "Brain gap / needs more context. The broad need for visibility is known; the specific HudUI artifact is not verified.",
+      "facts": "Captured article claims HudUI is a browser-based dashboard for live agents, chat sessions, scheduled tasks, broken tools, model settings, plugins, health checks, gateways, sessions, and diagnostics. Article contrasts HudUI with Hermes Workspace. Capture is partial because the 8:34 embedded X video was not transcribed.",
+      "interpretation": "The idea is sane — dashboards are where cron failures stop hiding in logs — but the source is promotional and light on technical substance. Web search surfaced Julian/LinkedIn promotional fragments, not an official repo or docs. Treat as a lead, not evidence.",
+      "dennis_relevance": "Medium if the actual tool exists and works with Dennis’s Hermes setup; low until a repo/docs/video transcript is recovered. Dennis already uses Hermes CLI and has dashboard/workspace context, so “browser UI good” is not a revelation.",
+      "suggested_action": "Deep research only if Dennis cares about HudUI specifically. Otherwise keep as source reference; do not promote now.",
+      "confidence": "moderate on captured claims; low on tool substance.",
+      "sources": "local capture; web search for “Hermes Agent HudUI GitHub”; sources/hindsight dashboard/workspace memories; workflows/hermes-agent-use-cases-and-agent-crew-design."
+    },
+    {
+      "id": 3,
+      "title": "9-layer AI production architecture",
+      "author": "Tech with Mak @techNmak",
+      "capture_file": "internal:x-bookmarks/captures/2026-05-11--tech-with-mak-ai-production-architecture.md",
+      "status": "captured_full",
+      "bucket": "make_skill_later",
+      "suggested_action_id": "skillify",
+      "heading": "9-layer AI production architecture — Tech with Mak @techNmak",
+      "analysis_md": "- **Capture:** internal:x-bookmarks/captures/2026-05-11--tech-with-mak-ai-production-architecture.md\n- **Original source:** https://x.com/techNmak/status/2052621789478703584; recovered media image https://pbs.twimg.com/media/HHxgo7CbIAAvnqa.jpg?name=large\n- **GBrain context:** `workflows/agent-readable-folder-instructions` covers AGENTS/CLAUDE/context files. GBrain has local-AI/RAG-ish source notes, but no canonical production-AI-app architecture checklist combining RAG services, prompt registry, security, eval, observability, tests/docs, and agent context.\n- **New vs known:** Brain gap / skill candidate. The individual parts are familiar; the compact checklist shape is the value.\n- **Facts:** The source argues production AI apps should separate retrieval components, services, prompts, agents/tools, input/content/output security guards, evaluation, observability/cost tracking, data lifecycle, scripts, frontend, tests, docs, and `.claude`/`CLAUDE.md`/`AGENTS.md` context.\n- **Interpretation:** Strong as a checklist, weak as authority. There is no linked original source behind the screenshot; web search found reposts and fragments, not a solid official page. Still, the architecture is sensible and testable.\n- **Dennis relevance:** Medium-high if converted into a reusable review skill/checklist for AI app repos. Lower if treated as yet another pretty architecture screenshot.\n- **Suggested action:** Make skill later: `production-ai-app-architecture-audit` or fold into an existing code/repo review workflow. Use it as a checklist, not doctrine.\n- **Confidence:** high on captured screenshot contents; moderate on usefulness; low on provenance beyond X/media.\n- **Sources:** local capture; `workflows/agent-readable-folder-instructions`; web searches for `production-ai-app`, `academy.neosage.io`, and file names from the screenshot.",
+      "capture": "internal:x-bookmarks/captures/2026-05-11--tech-with-mak-ai-production-architecture.md",
+      "original_source": "https://x.com/techNmak/status/2052621789478703584; recovered media image https://pbs.twimg.com/media/HHxgo7CbIAAvnqa.jpg?name=large",
+      "gbrain_context": "workflows/agent-readable-folder-instructions covers AGENTS/CLAUDE/context files. GBrain has local-AI/RAG-ish source notes, but no canonical production-AI-app architecture checklist combining RAG services, prompt registry, security, eval, observability, tests/docs, and agent context.",
+      "new_vs_known": "Brain gap / skill candidate. The individual parts are familiar; the compact checklist shape is the value.",
+      "facts": "The source argues production AI apps should separate retrieval components, services, prompts, agents/tools, input/content/output security guards, evaluation, observability/cost tracking, data lifecycle, scripts, frontend, tests, docs, and .claude/CLAUDE.md/AGENTS.md context.",
+      "interpretation": "Strong as a checklist, weak as authority. There is no linked original source behind the screenshot; web search found reposts and fragments, not a solid official page. Still, the architecture is sensible and testable.",
+      "dennis_relevance": "Medium-high if converted into a reusable review skill/checklist for AI app repos. Lower if treated as yet another pretty architecture screenshot.",
+      "suggested_action": "Make skill later: production-ai-app-architecture-audit or fold into an existing code/repo review workflow. Use it as a checklist, not doctrine.",
+      "confidence": "high on captured screenshot contents; moderate on usefulness; low on provenance beyond X/media.",
+      "sources": "local capture; workflows/agent-readable-folder-instructions; web searches for production-ai-app, academy.neosage.io, and file names from the screenshot."
+    }
+  ],
+  "actions": [
+    {
+      "id": "promote",
+      "label": "Promote",
+      "kind": "primary",
+      "hint": "Be Hermes prepare/promote this into GBrain after review."
+    },
+    {
+      "id": "source_only",
+      "label": "Source only",
+      "kind": "primary",
+      "hint": "Keep as reference material; no canonical promotion."
+    },
+    {
+      "id": "ignore",
+      "label": "Ignore",
+      "kind": "primary",
+      "hint": "Mark as low-signal/archive; do not revisit unless asked."
+    },
+    {
+      "id": "try_later",
+      "label": "Test later",
+      "kind": "modifier",
+      "hint": "Keep as a controlled spike/test candidate."
+    },
+    {
+      "id": "skillify",
+      "label": "Skillify",
+      "kind": "modifier",
+      "hint": "Turn the reusable workflow into a Hermes skill draft."
+    },
+    {
+      "id": "deep_research",
+      "label": "Deep research",
+      "kind": "modifier",
+      "hint": "Ask Hermes to research this item properly with sources."
+    }
+  ]
+};
+    const selections = new Map();
+
+    function itemById(id) {
+      return XBM_DATA.items.find(item => String(item.id) === String(id));
+    }
+
+    function toast(message) {
+      const node = document.getElementById('toast');
+      node.textContent = message;
+      node.classList.add('show');
+      window.setTimeout(() => node.classList.remove('show'), 1600);
+    }
+
+    const PRIMARY_ACTIONS = new Set(XBM_DATA.actions.filter(action => action.kind === 'primary').map(action => action.id));
+    const MODIFIER_ACTIONS = new Set(XBM_DATA.actions.filter(action => action.kind === 'modifier').map(action => action.id));
+
+    function blankSelection() {
+      return { primary_action: null, modifier_actions: [], note: '' };
+    }
+
+    function hasSelection(state) {
+      return Boolean(state.primary_action || state.modifier_actions.length || (state.note || '').trim());
+    }
+
+    function itemDecisions() {
+      return Array.from(selections.entries()).map(([itemId, state]) => {
+        const item = itemById(itemId);
+        return {
+          item_id: Number(itemId),
+          primary_action: state.primary_action || null,
+          modifier_actions: [...state.modifier_actions],
+          title: item?.title || '',
+          author: item?.author || '',
+          bucket: item?.bucket || '',
+          url: item?.original_source || '',
+          capture: item?.capture || item?.capture_file || '',
+          note: state.note || '',
+          reason: item?.suggested_action || '',
+        };
+      }).filter(decision => decision.primary_action || decision.modifier_actions.length || decision.note).sort((a, b) => a.item_id - b.item_id);
+    }
+
+    function selectedActions() {
+      return itemDecisions().flatMap(decision => {
+        const ids = [];
+        if (decision.primary_action) ids.push(decision.primary_action);
+        ids.push(...decision.modifier_actions);
+        return ids.map(action => ({ ...decision, action }));
+      });
+    }
+
+    function buildPayload() {
+      const decisions = itemDecisions();
+      return {
+        source: 'x-bookmarks-research-brief',
+        mode: 'intent_queue_copy_only',
+        selection_model: 'one_primary_plus_many_modifiers',
+        report_id: XBM_DATA.meta.report_id,
+        report_path: XBM_DATA.meta.report_path,
+        source_run: XBM_DATA.meta.source_run,
+        created_at: new Date().toISOString(),
+        item_decisions: decisions,
+        actions: selectedActions(),
+      };
+    }
+
+    function buildCommand(payload) {
+      if (!payload.item_decisions.length) return 'Velg minst én action først.';
+      const lines = [
+        `xbm actions report="${payload.report_id}"`,
+        `source_report="${payload.report_path}"`,
+        '',
+      ];
+      for (const decision of payload.item_decisions) {
+        const labels = [];
+        if (decision.primary_action) labels.push(decision.primary_action);
+        labels.push(...decision.modifier_actions);
+        const note = decision.note ? ` note="${decision.note.replaceAll('"', '"')}"` : '';
+        lines.push(`- item ${decision.item_id}: ${labels.join(' + ')} — ${decision.title}${note}`);
+      }
+      return lines.join('\n');
+    }
+
+    function updateButtons() {
+      document.querySelectorAll('.action-btn').forEach(button => {
+        const itemId = button.dataset.itemId;
+        const action = button.dataset.action;
+        const kind = button.dataset.choiceKind;
+        const state = selections.get(itemId);
+        const active = Boolean(state && (
+          (kind === 'primary' && state.primary_action === action) ||
+          (kind === 'modifier' && state.modifier_actions.includes(action))
+        ));
+        button.classList.toggle('selected', active);
+        button.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+    }
+
+    function updateQueue() {
+      const payload = buildPayload();
+      document.getElementById('queueOutput').textContent = buildCommand(payload);
+      updateButtons();
+    }
+
+    async function copyText(text, label) {
+      try {
+        await navigator.clipboard.writeText(text);
+        toast(`${label} copied`);
+      } catch (error) {
+        const box = document.getElementById('queueOutput');
+        box.textContent = text;
+        toast('Clipboard blocked — select/copy manually');
+      }
+    }
+
+    document.querySelectorAll('.action-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        const itemId = button.dataset.itemId;
+        const action = button.dataset.action;
+        const kind = button.dataset.choiceKind;
+        const noteNode = document.querySelector(`textarea[data-note-for="${itemId}"]`);
+        const state = selections.get(itemId) || blankSelection();
+        if (kind === 'primary' && PRIMARY_ACTIONS.has(action)) {
+          state.primary_action = state.primary_action === action ? null : action;
+        } else if (kind === 'modifier' && MODIFIER_ACTIONS.has(action)) {
+          state.modifier_actions = state.modifier_actions.includes(action)
+            ? state.modifier_actions.filter(existing => existing !== action)
+            : [...state.modifier_actions, action];
+        }
+        state.note = noteNode?.value || '';
+        if (hasSelection(state)) {
+          selections.set(itemId, state);
+        } else {
+          selections.delete(itemId);
+        }
+        updateQueue();
+      });
+    });
+
+    document.querySelectorAll('textarea[data-note-for]').forEach(textarea => {
+      textarea.addEventListener('input', () => {
+        const itemId = textarea.dataset.noteFor;
+        const state = selections.get(itemId) || blankSelection();
+        state.note = textarea.value;
+        if (hasSelection(state)) {
+          selections.set(itemId, state);
+        } else {
+          selections.delete(itemId);
+        }
+        updateQueue();
+      });
+    });
+
+    document.getElementById('copyCommand').addEventListener('click', () => {
+      copyText(buildCommand(buildPayload()), 'Command');
+    });
+
+    document.getElementById('copyJson').addEventListener('click', () => {
+      copyText(JSON.stringify(buildPayload(), null, 2), 'JSON');
+    });
+
+    document.getElementById('downloadJson').addEventListener('click', () => {
+      const payload = buildPayload();
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${payload.report_id}--xbm-actions.json`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      toast('JSON download started');
+    });
+
+    document.getElementById('clearActions').addEventListener('click', () => {
+      selections.clear();
+      updateQueue();
+    });
+
+    updateQueue();
+  </script>
+</body>
+</html>
