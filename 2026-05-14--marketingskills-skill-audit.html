@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>MarketingSkills skill-audit · Hermes</title>
+  <style>
+    :root {
+      --bg:#080b10; --panel:#101722; --panel2:#151e2d; --text:#edf2ff; --muted:#9aa8bd;
+      --line:#263246; --great:#27d980; --ok:#f2c94c; --bad:#ff647c; --cyan:#74d8ff; --violet:#a78bfa;
+      --shadow:0 24px 70px rgba(0,0,0,.35); --radius:22px;
+    }
+    *{box-sizing:border-box} body{margin:0;font:16px/1.55 Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif;background:radial-gradient(circle at top left, rgba(116,216,255,.18), transparent 34rem),radial-gradient(circle at 85% 8%, rgba(167,139,250,.17), transparent 30rem),var(--bg);color:var(--text)}
+    a{color:var(--cyan)} main{max-width:1180px;margin:0 auto;padding:40px 20px 70px}
+    .hero{display:grid;grid-template-columns:1.4fr .9fr;gap:24px;align-items:stretch;margin-bottom:28px}
+    .hero-card,.panel{background:linear-gradient(180deg,rgba(21,30,45,.94),rgba(10,15,23,.94));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .hero-card{padding:34px} .eyebrow{color:var(--cyan);text-transform:uppercase;letter-spacing:.16em;font-weight:800;font-size:12px}
+    h1{font-size:clamp(34px,5vw,64px);line-height:.95;margin:12px 0 16px;letter-spacing:-.05em} .lead{font-size:19px;color:#c9d5e6;max-width:760px}
+    .verdict{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px} .pill{border:1px solid var(--line);background:#0d1420;border-radius:999px;padding:9px 13px;color:#d7e1ef;font-weight:700}
+    .stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:20px} .stat{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:18px;padding:18px}
+    .stat b{display:block;font-size:34px;letter-spacing:-.04em} .stat span{color:var(--muted);font-size:13px}
+    .summary{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0} .summary .panel{padding:20px}
+    .summary h2{margin:0 0 8px;font-size:18px} .summary p{margin:0;color:#bdc9db}
+    .score-great{color:var(--great)} .score-ok{color:var(--ok)} .score-bad{color:var(--bad)}
+    .toolbar{position:sticky;top:0;z-index:3;backdrop-filter:blur(16px);background:rgba(8,11,16,.76);border:1px solid var(--line);border-radius:18px;padding:12px;margin:28px 0;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    button{appearance:none;border:1px solid var(--line);background:#111a28;color:var(--text);padding:10px 13px;border-radius:12px;font-weight:800;cursor:pointer} button.active{background:var(--cyan);color:#061018;border-color:var(--cyan)}
+    input{flex:1;min-width:240px;background:#0b111b;border:1px solid var(--line);color:var(--text);border-radius:12px;padding:11px 12px}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .card{background:linear-gradient(180deg,rgba(21,30,45,.98),rgba(12,18,28,.98));border:1px solid var(--line);border-radius:20px;padding:18px;position:relative;overflow:hidden}
+    .card:before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--line)} .card.great:before{background:var(--great)} .card.ok:before{background:var(--ok)} .card.bad:before{background:var(--bad)}
+    .card-top{display:flex;justify-content:space-between;gap:12px;align-items:center} h3{margin:0;font-size:21px;letter-spacing:-.02em}
+    .badge{font-size:12px;font-weight:900;border-radius:999px;padding:6px 9px;white-space:nowrap} .badge.great{background:rgba(39,217,128,.14);color:var(--great)} .badge.ok{background:rgba(242,201,76,.13);color:var(--ok)} .badge.bad{background:rgba(255,100,124,.13);color:var(--bad)}
+    .what{color:#d8e2f2;margin:12px 0 8px} .why{color:var(--muted);margin:0 0 14px} .meta{display:flex;gap:8px;flex-wrap:wrap} .meta span{font-size:12px;color:#b9c6d8;background:#0a1019;border:1px solid var(--line);border-radius:999px;padding:5px 8px}
+    .recommend{margin-top:28px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px} .recommend .panel{padding:20px} .recommend h2{margin:0 0 10px;font-size:18px} .recommend ul{margin:0;padding-left:19px;color:#cbd6e6}
+    footer{margin-top:34px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:18px}
+    @media(max-width:860px){.hero,.summary,.recommend,.grid{grid-template-columns:1fr} h1{font-size:42px} .hero-card{padding:24px}}
+  </style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <div class="hero-card">
+      <div class="eyebrow">Hermes audit · coreyhaines31/marketingskills</div>
+      <h1>Skillpacken er sterk — men ikke alt bør importeres ukritisk.</h1>
+      <p class="lead">Jeg gikk gjennom repoets README/AGENTS, alle 40 <code>SKILL.md</code>, referanse-filer og evals. Kort dom: de beste skillsene er operative workflows. De svakeste er marketing-råd forkledd som skills.</p>
+      <div class="verdict"><span class="pill">Ingen egentlige child-skill mapper</span><span class="pill">Related Skills = dependency map</span><span class="pill">product-marketing = fundament</span></div>
+    </div>
+    <aside class="hero-card stats" aria-label="Oppsummeringstall">
+      <div class="stat"><b>40</b><span>skills analysert</span></div>
+      <div class="stat"><b>76</b><span>reference-filer</span></div>
+      <div class="stat"><b>40</b><span>eval-sett</span></div>
+      <div class="stat"><b>0</b><span>ekte child-skill mapper</span></div>
+    </aside>
+  </section>
+
+  <section class="summary">
+    <div class="panel"><h2 class="score-great">16 veldig bra</h2><p>Operative, konkrete og trygge nok til å bruke direkte eller importere først.</p></div>
+    <div class="panel"><h2 class="score-ok">20 ok</h2><p>Nyttige, men bør trimmes, kobles til lokale verktøy eller gjøres mer beslutningsorienterte.</p></div>
+    <div class="panel"><h2 class="score-bad">4 dårlige/svake</h2><p>For generiske eller for lite verifiserbare. Ikke verdt å importere ukritisk.</p></div>
+  </section>
+
+  <section class="toolbar" aria-label="Filter">
+    <button class="active" data-filter="all">Alle</button>
+    <button data-filter="Veldig bra">Veldig bra</button>
+    <button data-filter="Ok">Ok</button>
+    <button data-filter="Dårlig">Dårlig</button>
+    <input id="search" placeholder="Søk etter skill, domene eller begrunnelse…" />
+  </section>
+
+  <section class="grid" id="cards">
+    
+      <article class="card great" data-rating="Veldig bra" data-domain="SEO">
+        <div class="card-top">
+          <h3>seo-audit</h3>
+          <span class="badge great">Veldig bra</span>
+        </div>
+        <p class="what">Teknisk/on-page/content SEO-audit med prioriterte funn.</p>
+        <p class="why">Sterk fordi den har konkret audit-prioritering, output-format, verktøyvalg og en viktig edge-case: web_fetch/curl ser ikke alltid JS-injisert schema.</p>
+        <div class="meta"><span>SEO</span><span>2 refs</span></div>
+      </article>
+    
+      <article class="card great" data-rating="Veldig bra" data-domain="Measurement">
+        <div class="card-top">
+          <h3>analytics</h3>
+          <span class="badge great">Veldig bra</span>
+        </div>
+        <p class="what">Tracking plans, GA4/GTM, event-navn, UTM, debugging og validering.</p>
+        <p class="why">Går fra strategi til faktisk måleplan. Reference-filene for event library, GA4 og GTM gjør den operativ.</p>
+        <div class="meta"><span>Measurement</span><span>3 refs</span></div>
+      </article>
+    
+      <article class="card great" data-rating="Veldig bra" data-domain="Paid">
+        <div class="card-top">
+          <h3>ads</h3>
+          <span class="badge great">Veldig bra</span>
+        </div>
+        <p class="what">Paid ads-strategi for Google, Meta, LinkedIn og andre plattformer.</p>
+        <p class="why">Dekker kampanjestruktur, targeting, conversion tracking, budsjettfeil og plattformvalg. Praktisk nok til å unngå idiotiske “run ads”-råd.</p>
+        <div class="meta"><span>Paid</span><span>4 refs</span></div>
+      </article>
+    
+      <article class="card great" data-rating="Veldig bra" data-domain="Paid">
+        <div class="card-top">
+          <h3>ad-creative</h3>
+          <span class="badge great">Veldig bra</span>
+        </div>
+        <p class="what">Lager og itererer annonsetekst/creative i bulk.</p>
+        <p class="why">Har plattformspesifikke specs, creative testing, performance iteration og generative-tool guidance. Mer produksjonsorientert enn vanlig copywriting.</p>
+        <div class="meta"><span>Paid</span><span>2 refs</span></div>
+      </article>
+    
+      <article class="card great" data-rating="Veldig bra" data-domain="SEO">
+        <div class="card-top">
+          <h3>ai-seo</h3>
+          <span class="badge great">Veldig bra</span>
+        </div>
+        <p class="what">Optimalisering for AI Overviews, ChatGPT, Perplexity, AEO/GEO/LLMO.</p>
+        <p class="why">Skiller tradisjonell SEO fra AI-citation patterns og har gode content/platform references. Litt buzzwordy, men nyttig.</p>
+        <div class="meta"><span>SEO</span><span>2 refs</span></div>
+      </article>
+    
+      <article class="card great" data-rating="Veldig bra" data-domain="App">
+        <div class="card-top">
+          <h3>aso</h3>
+          <span class="badge great">Veldig bra</span>
+        </div>
+        <p class="what">App Store / Google Play optimization.</p>
+        <p class="why">Har scoring criteria, official specs, benchmarks og screenshot-limitation workflow. Den vet hva scraping ikke ser.</p>
+        <div class="meta"><span>App</span><span>5 refs</span></div>
+      </article>
+    
+      <article class="card great" data-rating="Veldig bra" data-domain="Experimentation">
+        <div class="card-top">
+          <h3>ab-testing</h3>
+          <span class="badge great">Veldig bra</span>
+        </div>
+        <p class="what">Planlegger og analyserer A/B-tester og eksperimentprogram.</p>
+        <p class="why">Dekker hypoteser, sample size, metrics, stopping rules, vanlige feil og templates. En av de mer seriøse skillsene.</p>
+        <div class="meta"><span>Experimentation</span><span>2 refs</span></div>
+      </article>
+    
+      <article class="card great" data-rating="Veldig bra" data-domain="Retention">
+        <div class="card-top">
+          <h3>churn-prevention</h3>
+          <span class="badge great">Veldig bra</span>
+        </div>
+        <p class="what">Cancel flows, save offers, dunning, win-back og retention.</p>
+        <p class="why">Går inn i voluntary/involuntary churn, dunning playbook, metrics og tool-map. Praktisk, ikke bare “snakk med kundene”.</p>
+        <div class="meta"><span>Retention</span><span>2 refs</span></div>
+      </article>
+    
+      <article class="card great" data-rating="Veldig bra" data-domain="Sales">
+        <div class="card-top">
+          <h3>cold-email</h3>
+          <span class="badge great">Veldig bra</span>
+        </div>
+        <p class="what">B2B cold outreach og follow-up sequences.</p>
+        <p class="why">Kort, skarp og anvendelig. Har benchmarks, subject lines, personalization levels og klare anti-patterns.</p>
+        <div class="meta"><span>Sales</span><span>5 refs</span></div>
+      </article>
+    
+      <article class="card great" data-rating="Veldig bra" data-domain="Research">
+        <div class="card-top">
+          <h3>competitor-profiling</h3>
+          <span class="badge great">Veldig bra</span>
+        </div>
+        <p class="what">Strukturerte competitor profiles fra URL-er.</p>
+        <p class="why">Workflow-basert: map site, scrape key pages, lag raw-data, hent pricing/messaging/features/reviews. God provenance-disiplin.</p>
+        <div class="meta"><span>Research</span><span>2 refs</span></div>
+      </article>
+    
+      <article class="card great" data-rating="Veldig bra" data-domain="Research">
+        <div class="card-top">
+          <h3>customer-research</h3>
+          <span class="badge great">Veldig bra</span>
+        </div>
+        <p class="what">VOC, JTBD, review mining, interviews, personas og digital watering holes.</p>
+        <p class="why">Insisterer på exact quotes og skiller research assets fra online research. Høy nytte på tvers av hele packen.</p>
+        <div class="meta"><span>Research</span><span>1 ref</span></div>
+      </article>
+    
+      <article class="card great" data-rating="Veldig bra" data-domain="Distribution">
+        <div class="card-top">
+          <h3>directory-submissions</h3>
+          <span class="badge great">Veldig bra</span>
+        </div>
+        <p class="what">Produkt-/startup-/AI-directory submission plan.</p>
+        <p class="why">Har hard readiness gate, tiers, positioning variations, tracker-template og Product Hunt/reviews playbook. Veldig konkret.</p>
+        <div class="meta"><span>Distribution</span><span>3 refs</span></div>
+      </article>
+    
+      <article class="card great" data-rating="Veldig bra" data-domain="Foundation">
+        <div class="card-top">
+          <h3>product-marketing</h3>
+          <span class="badge great">Veldig bra</span>
+        </div>
+        <p class="what">Lager .agents/product-marketing.md som felles kontekst for resten.</p>
+        <p class="why">Arkitektonisk viktig. Ikke flashy, men løser agentens største problem: å slippe å spørre om ICP/positioning hver gang.</p>
+        <div class="meta"><span>Foundation</span><span>0 refs</span></div>
+      </article>
+    
+      <article class="card great" data-rating="Veldig bra" data-domain="Revenue">
+        <div class="card-top">
+          <h3>revops</h3>
+          <span class="badge great">Veldig bra</span>
+        </div>
+        <p class="what">Revenue ops, lead scoring, lifecycle stages, routing og CRM automations.</p>
+        <p class="why">Har scoring models, lifecycle definitions, routing rules og automation playbooks. Mer systemdesign enn marketing-fluff.</p>
+        <div class="meta"><span>Revenue</span><span>4 refs</span></div>
+      </article>
+    
+      <article class="card great" data-rating="Veldig bra" data-domain="Sales">
+        <div class="card-top">
+          <h3>sales-enablement</h3>
+          <span class="badge great">Veldig bra</span>
+        </div>
+        <p class="what">Sales decks, objection handling, demo scripts, one-pagers og ROI calculators.</p>
+        <p class="why">Reference-filene er gode: objection library, deck frameworks og demo scripts. Outputene er direkte brukbare.</p>
+        <div class="meta"><span>Sales</span><span>4 refs</span></div>
+      </article>
+    
+      <article class="card great" data-rating="Veldig bra" data-domain="Web">
+        <div class="card-top">
+          <h3>site-architecture</h3>
+          <span class="badge great">Veldig bra</span>
+        </div>
+        <p class="what">Website hierarchy, nav, URLs, internal linking og Mermaid sitemap.</p>
+        <p class="why">Gir faktisk struktur: ASCII tree, URL map, Mermaid, nav patterns og redirect-advarsler. Lett for agent å produsere konkret output.</p>
+        <div class="meta"><span>Web</span><span>3 refs</span></div>
+      </article>
+    
+      <article class="card ok" data-rating="Ok" data-domain="CRO">
+        <div class="card-top">
+          <h3>cro</h3>
+          <span class="badge ok">Ok</span>
+        </div>
+        <p class="what">Conversion rate optimization for pages/forms.</p>
+        <p class="why">Nyttig og praktisk, men litt kort relativt til viktigheten. Burde hatt mer evidence, heuristics og browser/screenshot workflow.</p>
+        <div class="meta"><span>CRO</span><span>2 refs</span></div>
+      </article>
+    
+      <article class="card ok" data-rating="Ok" data-domain="Copy">
+        <div class="card-top">
+          <h3>copywriting</h3>
+          <span class="badge ok">Ok</span>
+        </div>
+        <p class="what">Website/landing page copy.</p>
+        <p class="why">Solid, med output-format og frameworks, men mye overlapper generisk marketing-copy kunnskap.</p>
+        <div class="meta"><span>Copy</span><span>2 refs</span></div>
+      </article>
+    
+      <article class="card ok" data-rating="Ok" data-domain="Copy">
+        <div class="card-top">
+          <h3>copy-editing</h3>
+          <span class="badge ok">Ok</span>
+        </div>
+        <p class="what">Redigerer eksisterende copy med syv sweeps.</p>
+        <p class="why">Ganske bra som QA-pass etter copywriting, men litt tung og prosessuell.</p>
+        <div class="meta"><span>Copy</span><span>3 refs</span></div>
+      </article>
+    
+      <article class="card ok" data-rating="Ok" data-domain="SEO">
+        <div class="card-top">
+          <h3>competitors</h3>
+          <span class="badge ok">Ok</span>
+        </div>
+        <p class="what">Comparison/alternative/vs pages for SEO og sales enablement.</p>
+        <p class="why">Bra asset-skill, men avhenger mye av research fra competitor-profiling. Sterkere sammen enn alene.</p>
+        <div class="meta"><span>SEO</span><span>2 refs</span></div>
+      </article>
+    
+      <article class="card ok" data-rating="Ok" data-domain="Content">
+        <div class="card-top">
+          <h3>content-strategy</h3>
+          <span class="badge ok">Ok</span>
+        </div>
+        <p class="what">Content pillars, clusters, buyer-stage keywords og editorial planning.</p>
+        <p class="why">Solid, men konvensjonell. Headless CMS reference er nyttig; prioritization model kunne vært hardere.</p>
+        <div class="meta"><span>Content</span><span>1 ref</span></div>
+      </article>
+    
+      <article class="card ok" data-rating="Ok" data-domain="Lifecycle">
+        <div class="card-top">
+          <h3>emails</h3>
+          <span class="badge ok">Ok</span>
+        </div>
+        <p class="what">Lifecycle/nurture/onboarding/re-engagement sequences.</p>
+        <p class="why">Bra nok: sequence overview, per-email format, metrics og tool refs. Ikke spektakulær, men operativ.</p>
+        <div class="meta"><span>Lifecycle</span><span>3 refs</span></div>
+      </article>
+    
+      <article class="card ok" data-rating="Ok" data-domain="Lead gen">
+        <div class="card-top">
+          <h3>lead-magnets</h3>
+          <span class="badge ok">Ok</span>
+        </div>
+        <p class="what">Gated content, templates, checklists, ebooks og capture-plan.</p>
+        <p class="why">God struktur og benchmarks. Tradisjonell, men nyttig.</p>
+        <div class="meta"><span>Lead gen</span><span>2 refs</span></div>
+      </article>
+    
+      <article class="card ok" data-rating="Ok" data-domain="Product">
+        <div class="card-top">
+          <h3>onboarding</h3>
+          <span class="badge ok">Ok</span>
+        </div>
+        <p class="what">Post-signup activation og first-run experience.</p>
+        <p class="why">Praktisk for checklist/empty states/activation, men mangler mer produktanalytisk diagnose.</p>
+        <div class="meta"><span>Product</span><span>1 ref</span></div>
+      </article>
+    
+      <article class="card ok" data-rating="Ok" data-domain="Monetization">
+        <div class="card-top">
+          <h3>paywalls</h3>
+          <span class="badge ok">Ok</span>
+        </div>
+        <p class="what">In-app upgrade screens, trial-to-paid og feature gates.</p>
+        <p class="why">God på trigger timing og dark patterns, men smal og litt basic.</p>
+        <div class="meta"><span>Monetization</span><span>1 ref</span></div>
+      </article>
+    
+      <article class="card ok" data-rating="Ok" data-domain="Monetization">
+        <div class="card-top">
+          <h3>pricing</h3>
+          <span class="badge ok">Ok</span>
+        </div>
+        <p class="what">Pricing, packaging, tiers og willingness-to-pay.</p>
+        <p class="why">Solid startpunkt med Van Westendorp/tier refs, men pricing er for vanskelig til at den blir mer enn et startpunkt.</p>
+        <div class="meta"><span>Monetization</span><span>2 refs</span></div>
+      </article>
+    
+      <article class="card ok" data-rating="Ok" data-domain="SEO">
+        <div class="card-top">
+          <h3>programmatic-seo</h3>
+          <span class="badge ok">Ok</span>
+        </div>
+        <p class="what">Template/data-driven SEO pages at scale.</p>
+        <p class="why">Har playbooks og anti-thin-content warnings, men burde hatt mer teknisk implementation og QA.</p>
+        <div class="meta"><span>SEO</span><span>1 ref</span></div>
+      </article>
+    
+      <article class="card ok" data-rating="Ok" data-domain="Growth">
+        <div class="card-top">
+          <h3>referrals</h3>
+          <span class="badge ok">Ok</span>
+        </div>
+        <p class="what">Referral/affiliate/ambassador programs.</p>
+        <p class="why">Praktisk med program examples og affiliate refs. Ikke revolusjonerende, men brukbar.</p>
+        <div class="meta"><span>Growth</span><span>2 refs</span></div>
+      </article>
+    
+      <article class="card ok" data-rating="Ok" data-domain="SEO">
+        <div class="card-top">
+          <h3>schema</h3>
+          <span class="badge ok">Ok</span>
+        </div>
+        <p class="what">JSON-LD / structured data.</p>
+        <p class="why">Nyttig, men tynn. Bra output-format, men trenger flere validation paths og page-type decision trees.</p>
+        <div class="meta"><span>SEO</span><span>1 ref</span></div>
+      </article>
+    
+      <article class="card ok" data-rating="Ok" data-domain="CRO">
+        <div class="card-top">
+          <h3>signup</h3>
+          <span class="badge ok">Ok</span>
+        </div>
+        <p class="what">Signup/registration/free-trial flow optimization.</p>
+        <p class="why">Praktisk og lett å bruke, men har ingen reference-filer. Klar audit/output gjør den likevel brukbar.</p>
+        <div class="meta"><span>CRO</span><span>0 refs</span></div>
+      </article>
+    
+      <article class="card ok" data-rating="Ok" data-domain="Social">
+        <div class="card-top">
+          <h3>social</h3>
+          <span class="badge ok">Ok</span>
+        </div>
+        <p class="what">LinkedIn/X/Instagram/TikTok content, repurposing og hooks.</p>
+        <p class="why">Mange references og god platform coverage, men mye er generisk content advice.</p>
+        <div class="meta"><span>Social</span><span>5 refs</span></div>
+      </article>
+    
+      <article class="card ok" data-rating="Ok" data-domain="Media">
+        <div class="card-top">
+          <h3>video</h3>
+          <span class="badge ok">Ok</span>
+        </div>
+        <p class="what">AI video, avatars, Remotion/Hyperframes/HeyGen/Runway workflows.</p>
+        <p class="why">God overview og tool-map, men mer oversikt enn produksjonsplaybook. HeyGen må valideres i faktisk runtime.</p>
+        <div class="meta"><span>Media</span><span>1 ref</span></div>
+      </article>
+    
+      <article class="card ok" data-rating="Ok" data-domain="Media">
+        <div class="card-top">
+          <h3>image</h3>
+          <span class="badge ok">Ok</span>
+        </div>
+        <p class="what">AI image generation, social graphics, OG images og optimization.</p>
+        <p class="why">Praktisk, men bred og litt overflatisk. God på common mistakes: UI hallucination, aspect ratio, compression.</p>
+        <div class="meta"><span>Media</span><span>1 ref</span></div>
+      </article>
+    
+      <article class="card ok" data-rating="Ok" data-domain="Launch">
+        <div class="card-top">
+          <h3>launch</h3>
+          <span class="badge ok">Ok</span>
+        </div>
+        <p class="what">Product/feature launch, Product Hunt og GTM.</p>
+        <p class="why">Nyttig, men klassisk launch-checklist. Mangler references og harde beslutningskriterier.</p>
+        <div class="meta"><span>Launch</span><span>0 refs</span></div>
+      </article>
+    
+      <article class="card ok" data-rating="Ok" data-domain="Growth">
+        <div class="card-top">
+          <h3>free-tools</h3>
+          <span class="badge ok">Ok</span>
+        </div>
+        <p class="what">Engineering-as-marketing: calculators, graders og generators.</p>
+        <p class="why">Bra idéområde, men litt tynn. OK for strategy/brainstorm, ikke nok som build plan.</p>
+        <div class="meta"><span>Growth</span><span>1 ref</span></div>
+      </article>
+    
+      <article class="card ok" data-rating="Ok" data-domain="Partners">
+        <div class="card-top">
+          <h3>co-marketing</h3>
+          <span class="badge ok">Ok</span>
+        </div>
+        <p class="what">Partner identification, joint campaigns og account overlap.</p>
+        <p class="why">Har Crossbeam/Introw/PartnerStack tool refs, men ingen reference-filer og litt generisk partner-marketing.</p>
+        <div class="meta"><span>Partners</span><span>0 refs</span></div>
+      </article>
+    
+      <article class="card bad" data-rating="Dårlig" data-domain="Community">
+        <div class="card-top">
+          <h3>community-marketing</h3>
+          <span class="badge bad">Dårlig</span>
+        </div>
+        <p class="what">Community strategy for Slack/Discord/forums/advocates.</p>
+        <p class="why">Svak fordi den er kort, uten references, og mest generisk community advice. Ikke ødelagt, men lav prioritet.</p>
+        <div class="meta"><span>Community</span><span>0 refs</span></div>
+      </article>
+    
+      <article class="card bad" data-rating="Dårlig" data-domain="Ideas">
+        <div class="card-top">
+          <h3>marketing-ideas</h3>
+          <span class="badge bad">Dårlig</span>
+        </div>
+        <p class="what">Idébank med 139 marketing ideas.</p>
+        <p class="why">Mer idéliste enn agent-skill. Bra inspirasjon, dårlig execution. Risiko: agenten spytter ut taktikker uten diagnose.</p>
+        <div class="meta"><span>Ideas</span><span>1 ref</span></div>
+      </article>
+    
+      <article class="card bad" data-rating="Dårlig" data-domain="Psychology">
+        <div class="card-top">
+          <h3>marketing-psychology</h3>
+          <span class="badge bad">Dårlig</span>
+        </div>
+        <p class="what">Mental models, biases, persuasion og behavior science.</p>
+        <p class="why">Bred, modell-tung og uten references. Kan fort bli anchoring/social proof/scarcity-klisjéer uten testing-plan.</p>
+        <div class="meta"><span>Psychology</span><span>0 refs</span></div>
+      </article>
+    
+      <article class="card bad" data-rating="Dårlig" data-domain="CRO">
+        <div class="card-top">
+          <h3>popups</h3>
+          <span class="badge bad">Dårlig</span>
+        </div>
+        <p class="what">Popup/modal/banner optimization.</p>
+        <p class="why">Lang, men uten references. Overlapper CRO/lead-magnets/emails og trenger mer compliance/accessibility/browser-testing.</p>
+        <div class="meta"><span>CRO</span><span>0 refs</span></div>
+      </article>
+    
+  </section>
+
+  <section class="recommend">
+    <div class="panel"><h2>Importer først</h2><ul><li>seo-audit, analytics, ai-seo</li><li>ab-testing, customer-research</li><li>competitor-profiling, product-marketing</li><li>revops, sales-enablement, site-architecture</li><li>churn-prevention, directory-submissions, aso</li></ul></div>
+    <div class="panel"><h2>Importer etter trimming</h2><ul><li>copywriting, cro, emails</li><li>content-strategy, ads, ad-creative</li><li>pricing, programmatic-seo, referrals</li><li>schema, signup, social, video, image</li></ul></div>
+    <div class="panel"><h2>Ikke importer ukritisk</h2><ul><li>marketing-ideas</li><li>marketing-psychology</li><li>community-marketing</li><li>popups</li></ul></div>
+  </section>
+
+  <footer>
+    Publisert som en mobilvennlig HTML-rapport for Dennis. Kilde: GitHub-repoet <code>coreyhaines31/marketingskills</code>. Rapporten inneholder ingen lokale filbaner eller secrets.
+  </footer>
+</main>
+<script>
+  const buttons = [...document.querySelectorAll('button[data-filter]')];
+  const search = document.getElementById('search');
+  const cards = [...document.querySelectorAll('.card')];
+  let active = 'all';
+  function apply() {
+    const q = search.value.toLowerCase().trim();
+    cards.forEach(card => {
+      const ratingOk = active === 'all' || card.dataset.rating === active;
+      const textOk = !q || card.textContent.toLowerCase().includes(q) || card.dataset.domain.toLowerCase().includes(q);
+      card.style.display = ratingOk && textOk ? '' : 'none';
+    });
+  }
+  buttons.forEach(btn => btn.addEventListener('click', () => {
+    buttons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    active = btn.dataset.filter;
+    apply();
+  }));
+  search.addEventListener('input', apply);
+</script>
+</body>
+</html>
