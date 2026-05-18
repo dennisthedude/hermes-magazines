@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Meta Ads Manual Export Spec — Until MCP Is Running</title>
+  <style>
+    :root{
+      --bg:#080b12;--panel:#101827;--panel2:#152238;--ink:#eef5ff;--muted:#a8b5cc;--dim:#6f7e99;
+      --line:rgba(255,255,255,.12);--blue:#7ab7ff;--cyan:#66e6ff;--green:#8ff0a4;--yellow:#ffd36e;--red:#ff7f87;--purple:#c8a5ff;
+      --shadow:0 24px 80px rgba(0,0,0,.42);--r:22px;--mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
+      --sans:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:radial-gradient(circle at 15% -10%,rgba(102,230,255,.22),transparent 35rem),radial-gradient(circle at 90% 5%,rgba(200,165,255,.18),transparent 34rem),linear-gradient(180deg,#080b12,#060811 75%);color:var(--ink);font-family:var(--sans);line-height:1.48} a{color:var(--cyan)}
+    .wrap{width:min(1160px,calc(100% - 32px));margin:0 auto}.hero{padding:56px 0 28px}.badge{display:inline-flex;gap:9px;align-items:center;border:1px solid var(--line);background:rgba(255,255,255,.055);color:var(--muted);padding:8px 12px;border-radius:999px;font-size:13px}.dot{width:8px;height:8px;border-radius:99px;background:var(--green);box-shadow:0 0 18px var(--green)}
+    h1{font-size:clamp(42px,7vw,82px);line-height:.94;letter-spacing:-.065em;margin:20px 0 14px;max-width:1050px}.lead{font-size:clamp(18px,2.1vw,23px);color:var(--muted);max-width:870px;margin:0 0 22px}.lead strong{color:var(--ink)}
+    .hero-grid{display:grid;grid-template-columns:1fr .82fr;gap:16px;margin-top:24px}.card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.035));border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}.pad{padding:22px}.kicker{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--dim);font-weight:850}.verdict{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}.verdict div{background:rgba(0,0,0,.23);border:1px solid var(--line);border-radius:17px;padding:15px}.verdict b{display:block;font-size:21px;margin-bottom:4px}.verdict span{color:var(--muted);font-size:14px}
+    .terminal{background:#050711}.top{display:flex;gap:7px;padding:14px 16px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.045)}.lamp{width:11px;height:11px;border-radius:50%;background:#ff5f56}.lamp:nth-child(2){background:#ffbd2e}.lamp:nth-child(3){background:#27c93f}pre{margin:0;padding:19px;white-space:pre-wrap;font-family:var(--mono);font-size:13px;line-height:1.55;color:#dce9ff}.cmd{color:var(--green)}.warn{color:var(--yellow)}.bad{color:var(--red)}.comment{color:#8da1c5}
+    nav{position:sticky;top:0;z-index:5;background:rgba(6,8,17,.76);backdrop-filter:blur(15px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.nav{display:flex;gap:8px;overflow:auto;padding:10px 0}.nav a{white-space:nowrap;text-decoration:none;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:9px 12px;font-size:13px}.nav a:hover{color:var(--ink);background:rgba(255,255,255,.06)}
+    section{padding:34px 0}.head{display:flex;justify-content:space-between;gap:22px;align-items:end;margin-bottom:16px}h2{font-size:clamp(28px,4vw,46px);line-height:1;letter-spacing:-.045em;margin:0 0 8px}.head p{color:var(--muted);max-width:650px;margin:0}h3{margin:0 0 8px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.tile{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px;min-height:170px}.tile p,.tile li{color:var(--muted)}.pillrow{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.pill{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 8px;background:rgba(255,255,255,.04)}
+    .winner{border-color:rgba(143,240,164,.45);background:linear-gradient(180deg,rgba(143,240,164,.12),rgba(16,24,39,.95))}.badcard{border-color:rgba(255,127,135,.36)}
+    .flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}.step{position:relative;background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:17px;min-height:205px}.step:after{content:"→";position:absolute;right:-12px;top:50%;transform:translateY(-50%);font-size:24px;color:var(--cyan);z-index:2}.step:last-child:after{display:none}.num{font-family:var(--mono);font-weight:900;color:var(--cyan)}.step p{color:var(--muted);font-size:14px;margin:0}
+    table{width:100%;border-collapse:collapse;border-radius:18px;overflow:hidden;border:1px solid var(--line)}th,td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}th{background:rgba(255,255,255,.07);color:var(--ink)}td{color:var(--muted)}tr:last-child td{border-bottom:0}code{font-family:var(--mono);color:#e7efff;background:rgba(255,255,255,.07);border:1px solid var(--line);border-radius:7px;padding:2px 5px}.callout{border:1px solid rgba(255,211,110,.42);background:rgba(255,211,110,.085);color:#ffe7ad;border-radius:20px;padding:18px}.callout strong{color:#fff1cf}
+    .twocol{display:grid;grid-template-columns:1fr 1fr;gap:16px}.check label{display:flex;gap:10px;padding:12px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.04);margin-bottom:9px;color:var(--muted)}input[type=checkbox]{width:18px;height:18px;accent-color:var(--cyan);flex:0 0 auto;margin-top:2px}.progress{height:12px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid var(--line);overflow:hidden}.bar{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--green));transition:width .2s ease}.copy{cursor:pointer;min-height:44px;border:1px solid var(--line);border-radius:999px;background:var(--cyan);color:#061019;font-weight:850;padding:10px 14px}.copy.secondary{background:rgba(255,255,255,.06);color:var(--ink)}textarea{width:100%;min-height:176px;border:1px solid var(--line);border-radius:18px;background:#050711;color:#dce9ff;font-family:var(--mono);font-size:13px;line-height:1.5;padding:14px;resize:vertical}.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}.status{color:var(--muted);font-size:13px}.small{font-size:13px;color:var(--dim)}
+    footer{padding:34px 0 54px;color:var(--dim)}
+    @media(max-width:980px){.hero-grid,.twocol{grid-template-columns:1fr}.grid3{grid-template-columns:1fr 1fr}.flow{grid-template-columns:1fr}.step:after{content:"↓";right:22px;top:auto;bottom:-22px;transform:none}}
+    @media(max-width:650px){.verdict,.grid3{grid-template-columns:1fr}.pad{padding:17px}h1{letter-spacing:-.045em}.head{display:block}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar{transition:none}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <div class="badge"><span class="dot"></span> Meta Ads manual fallback · until MCP is connected</div>
+      <h1>Export one daily ad-level file. Not a pretty monthly summary.</h1>
+      <p class="lead"><strong>The clean minimum is one CSV with daily rows for the last 60 days.</strong> Monthly totals hide the exact patterns a Meta Ads diagnosis needs: creative fatigue, learning resets, paused delivery, budget shocks, and performance decay.</p>
+      <div class="hero-grid">
+        <div class="card pad">
+          <div class="kicker">Recommendation</div>
+          <h2 style="margin-top:8px">Best manual package</h2>
+          <div class="verdict">
+            <div><b>1 file</b><span>Daily ad-level performance export.</span></div>
+            <div><b>60 days</b><span>30 works; 90 is better if it is not huge.</span></div>
+            <div><b>Rows by date</b><span>Date + campaign + ad set + ad.</span></div>
+            <div><b>Same attribution</b><span>ROAS/CPA must name the attribution window.</span></div>
+          </div>
+        </div>
+        <div class="card terminal">
+          <div class="top"><span class="lamp"></span><span class="lamp"></span><span class="lamp"></span></div>
+          <pre><span class="cmd">Filename:</span>
+meta_ads_daily_ad_level_2026-03-20_to_2026-05-18.csv
+
+<span class="cmd">Rows:</span>
+Date | Campaign | Ad set | Ad | metrics...
+
+<span class="cmd">Range:</span>
+Last 60 days
+
+<span class="warn">Avoid:</span>
+one monthly aggregate with no daily breakdown
+
+<span class="comment">Why:</span>
+Monthly averages answer “what happened overall?”
+Daily rows answer “what broke, when, and why?”</pre>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav><div class="wrap nav"><a href="#format">Format</a><a href="#columns">Columns</a><a href="#compare">One file vs many</a><a href="#package">Manual package</a><a href="#prompt">Copy request</a><a href="#checklist">Checklist</a></div></nav>
+
+  <main>
+    <section id="format">
+      <div class="wrap">
+        <div class="head"><div><h2>The report shape</h2><p>Export from Meta Ads Manager at daily ad level. This preserves the timeline while still keeping campaign, ad set, and creative context.</p></div></div>
+        <div class="flow">
+          <div class="step"><div class="num">01</div><h3>Date range</h3><p>Use last 60 days as the default. Use 30 days for fast triage; use 90 days for full account audit.</p></div>
+          <div class="step"><div class="num">02</div><h3>Row level</h3><p>Rows should be grouped by Date + Campaign name + Ad set name + Ad name.</p></div>
+          <div class="step"><div class="num">03</div><h3>Metrics</h3><p>Spend, impressions, reach, frequency, clicks, conversions, CPA, value, ROAS, statuses.</p></div>
+          <div class="step"><div class="num">04</div><h3>Attribution</h3><p>Include or write down attribution setting/window. Without it, ROAS and CPA are ambiguous.</p></div>
+          <div class="step"><div class="num">05</div><h3>Export CSV</h3><p>CSV is easiest. Weekly CSVs are acceptable only if they have identical columns.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="columns">
+      <div class="wrap twocol">
+        <div class="card pad">
+          <div class="kicker">Required</div>
+          <h2>Minimum useful columns</h2>
+          <table>
+            <tr><th>Group</th><th>Columns</th></tr>
+            <tr><td>Identity</td><td><code>Date</code>, <code>Campaign name</code>, <code>Ad set name</code>, <code>Ad name</code></td></tr>
+            <tr><td>Spend/delivery</td><td><code>Spend</code>, <code>Impressions</code>, <code>Reach</code>, <code>Frequency</code></td></tr>
+            <tr><td>Traffic</td><td><code>Clicks</code>, <code>Link clicks</code>, <code>Landing page views</code>, <code>CTR</code>, <code>Link CTR</code>, <code>CPC</code>, <code>CPM</code></td></tr>
+            <tr><td>Conversion</td><td><code>Conversions</code> or <code>Purchases</code>/<code>Leads</code>, <code>CPA</code>, <code>Conversion value</code>, <code>ROAS</code></td></tr>
+            <tr><td>Context</td><td><code>Attribution setting</code>, <code>Campaign status</code>, <code>Ad set status</code>, <code>Ad status</code></td></tr>
+          </table>
+        </div>
+        <div class="card pad">
+          <div class="kicker">Optional but valuable</div>
+          <h2>Add these if Meta exposes them</h2>
+          <table>
+            <tr><th>Column</th><th>Why it helps</th></tr>
+            <tr><td><code>Delivery status</code> / <code>Learning phase</code></td><td>Shows whether delivery is unstable or learning-limited.</td></tr>
+            <tr><td><code>Budget</code></td><td>Lets us connect spend shifts to performance shifts.</td></tr>
+            <tr><td><code>Objective</code></td><td>Prevents comparing campaigns built for different jobs.</td></tr>
+            <tr><td><code>Optimization event</code></td><td>Shows what Meta is actually optimizing toward.</td></tr>
+            <tr><td><code>Bid strategy</code></td><td>Important for scale, CPA caps, and delivery constraints.</td></tr>
+            <tr><td><code>Ad ID</code> / <code>Creative name</code> / <code>Post ID</code></td><td>Useful for creative fatigue and entity clustering.</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="compare">
+      <div class="wrap">
+        <div class="head"><div><h2>One file or several reports?</h2><p>Use one daily export unless Meta makes it impossible. Multiple weekly files are workable, but only if the columns match perfectly.</p></div></div>
+        <div class="grid3">
+          <article class="tile winner"><h3>Best: one daily file</h3><p><strong>Last 60 days, ad-level, daily rows.</strong> Cleanest for trend diagnosis, fatigue detection, pauses, and current-vs-previous comparisons.</p><div class="pillrow"><span class="pill">recommended</span><span class="pill">lowest error risk</span></div></article>
+          <article class="tile"><h3>Acceptable: weekly files</h3><p>Several one-week CSVs are fine if every file has exactly the same columns and naming. More annoying, easier to screw up.</p><div class="pillrow"><span class="pill">usable</span><span class="pill">combine needed</span></div></article>
+          <article class="tile badcard"><h3>Weak: one week only</h3><p>Useful for quick triage if spend and conversion volume are high. Too noisy for proper root-cause analysis in many accounts.</p><div class="pillrow"><span class="pill">triage only</span></div></article>
+          <article class="tile badcard"><h3>Bad: monthly aggregate</h3><p>Looks clean but hides most diagnostic signals. It tells us totals, not causality or timing.</p><div class="pillrow"><span class="pill">avoid</span></div></article>
+          <article class="tile"><h3>Good comparison</h3><p>For budget or scale decisions, compare current 30 days vs previous 30 days, ideally still using daily rows underneath.</p><div class="pillrow"><span class="pill">scale decisions</span></div></article>
+          <article class="tile"><h3>Breakdowns later</h3><p>Age, gender, placement, device, and country should be exported separately only when needed. They are clues, not automatic pause rules.</p><div class="pillrow"><span class="pill">Breakdown Effect caveat</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="package">
+      <div class="wrap">
+        <div class="head"><div><h2>The manual package</h2><p>If someone is exporting data for Hermes, ask for these in this order. Do not start with every possible breakdown; that creates noise.</p></div></div>
+        <div class="grid3">
+          <article class="tile winner"><div class="kicker">Required</div><h3>1. Daily ad-level performance</h3><p>Rows: Date + Campaign + Ad set + Ad. Range: last 60 days. This is the main file.</p></article>
+          <article class="tile"><div class="kicker">Useful</div><h3>2. Campaign/ad set summary</h3><p>Rows: Campaign + Ad set. Range: last 30 days. Gives cleaner structure and budget overview.</p></article>
+          <article class="tile"><div class="kicker">Only if needed</div><h3>3. Breakdown reports</h3><p>Age, gender, placement, device, country/region. Use as clues, not blind instructions to cut spend.</p></article>
+          <article class="tile"><div class="kicker">Very useful</div><h3>4. Tracking notes/screenshots</h3><p>Attribution window, Pixel/CAPI status, optimized event, conversion definition, and value-passing status.</p></article>
+          <article class="tile"><div class="kicker">Reality check</div><h3>5. Shopify/GA4/backend data</h3><p>If available, use it to compare platform-reported conversions against actual revenue/leads.</p></article>
+          <article class="tile"><div class="kicker">Naming</div><h3>6. Use clear filenames</h3><p><code>meta_ads_daily_ad_level_YYYY-MM-DD_to_YYYY-MM-DD.csv</code> keeps data provenance obvious.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="prompt">
+      <div class="wrap twocol">
+        <div class="card pad">
+          <div class="kicker">Copy/paste request</div>
+          <h2>Send this to whoever exports the data</h2>
+          <textarea id="requestText" readonly>Please export one CSV from Meta Ads Manager with daily ad-level rows for the last 60 days.
+
+Row grouping:
+- Date
+- Campaign name
+- Ad set name
+- Ad name
+
+Required metrics/columns:
+- Spend
+- Impressions
+- Reach
+- Frequency
+- Clicks
+- Link clicks
+- Landing page views
+- CTR
+- Link CTR
+- CPC
+- CPM
+- Conversions / purchases / leads
+- Cost per conversion / CPA
+- Conversion value
+- ROAS
+- Attribution setting / attribution window
+- Campaign status
+- Ad set status
+- Ad status
+
+Add these if available:
+- Delivery status / learning phase
+- Budget
+- Objective
+- Optimization event
+- Bid strategy
+- Ad ID / creative name / post ID
+
+Preferred filename:
+meta_ads_daily_ad_level_YYYY-MM-DD_to_YYYY-MM-DD.csv
+
+Please do not send only a monthly aggregate. We need daily rows so Hermes can diagnose timing, fatigue, pauses, learning resets, and performance decay.</textarea>
+          <div class="actions"><button class="copy" data-copy="requestText">Copy request</button><span class="status" id="copyStatus"></span></div>
+        </div>
+        <div class="card pad">
+          <div class="kicker">Use-case rules</div>
+          <h2>Which range to use?</h2>
+          <table>
+            <tr><th>Use case</th><th>Export</th></tr>
+            <tr><td>Quick weekly check</td><td>Last 14–30 days, daily rows.</td></tr>
+            <tr><td>Proper account audit</td><td>Last 60–90 days, daily rows.</td></tr>
+            <tr><td>Monthly business summary</td><td>Monthly totals are fine only after diagnosis.</td></tr>
+            <tr><td>Creative fatigue check</td><td>Last 30–60 days, daily ad-level rows.</td></tr>
+            <tr><td>Budget/scale decision</td><td>Current 30 days vs previous 30 days.</td></tr>
+            <tr><td>Tracking suspicion</td><td>Platform data + Shopify/GA4/backend reality.</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="checklist">
+      <div class="wrap twocol">
+        <div class="card pad">
+          <div class="kicker">Pre-flight</div>
+          <h2>Before sending to Hermes</h2>
+          <div class="check" id="checks">
+            <label><input type="checkbox">File has daily rows, not just totals.</label>
+            <label><input type="checkbox">Date range is at least 30 days; preferably 60 days.</label>
+            <label><input type="checkbox">Rows include campaign, ad set, and ad names.</label>
+            <label><input type="checkbox">Spend, impressions, clicks, conversions, value/ROAS/CPA, and frequency are included.</label>
+            <label><input type="checkbox">Attribution setting/window is included or written down.</label>
+            <label><input type="checkbox">Statuses are included so paused ads/campaigns are visible.</label>
+            <label><input type="checkbox">If multiple files exist, all use the same columns.</label>
+          </div>
+          <div class="progress"><div class="bar" id="bar"></div></div>
+          <p class="small" id="progressText">0/7 complete</p>
+        </div>
+        <div class="card pad">
+          <div class="kicker">Bottom line</div>
+          <h2>The simple rule</h2>
+          <div class="callout"><strong>Use one CSV with daily ad-level rows over 60 days.</strong> If the account is tiny, 90 days may be better. If the export gets enormous, start with 30 days plus a campaign/ad set summary.</div>
+          <p style="color:var(--muted)">Once MCP is connected, this manual export becomes a fallback. Until then, this is the highest-signal, lowest-chaos way to feed <code>/skill meta-ads</code>.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap">Published as a GitHub Pages artifact for Dennis · no account data included · spec only.</div></footer>
+  <script>
+    const checks=Array.from(document.querySelectorAll('#checks input[type="checkbox"]'));
+    const bar=document.getElementById('bar');
+    const progressText=document.getElementById('progressText');
+    function update(){const done=checks.filter(x=>x.checked).length,total=checks.length;bar.style.width=Math.round(done/total*100)+'%';progressText.textContent=done+'/'+total+' complete'}
+    checks.forEach(x=>x.addEventListener('change',update));update();
+    document.querySelectorAll('[data-copy]').forEach(btn=>btn.addEventListener('click',async()=>{
+      const el=document.getElementById(btn.dataset.copy);const status=document.getElementById('copyStatus');
+      try{await navigator.clipboard.writeText(el.value);status.textContent='Copied.';setTimeout(()=>status.textContent='',1600)}
+      catch(e){el.select();document.execCommand('copy');status.textContent='Copied.';setTimeout(()=>status.textContent='',1600)}
+    }));
+  </script>
+</body>
+</html>
