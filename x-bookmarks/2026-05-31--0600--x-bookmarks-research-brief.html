@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>XBM Research Brief — 2026-05-31--0600--x-bookmarks-research-brief</title>
+<style>
+:root { color-scheme: dark; --bg:#0b0d12; --panel:#151923; --panel2:#101521; --muted:#9aa4b2; --text:#edf2f7; --line:#263041; --accent:#7dd3fc; --ok:#86efac; --bad:#fca5a5; }
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at top left,rgba(125,211,252,.12),transparent 28rem),var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif} main{max-width:980px;margin:0 auto;padding:22px 16px 56px} header{padding:16px 0 10px;border-bottom:1px solid var(--line)} h1{font-size:clamp(1.35rem,5vw,2rem);line-height:1.05;margin:.2rem 0} h2{font-size:1.15rem;margin:.4rem 0 .6rem} h3{font-size:1rem;margin:1rem 0 .4rem} .meta,.muted,.small{color:var(--muted)} .card,.queue{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;margin:14px 0;box-shadow:0 8px 30px rgba(0,0,0,.18)} .item-card{margin-top:16px} .detail-list{display:grid;gap:10px;margin:14px 0} .detail-row{display:grid;gap:4px;padding:10px 0;border-top:1px solid rgba(255,255,255,.06)} .detail-row:first-child{border-top:0;padding-top:0} .detail-row dt{color:var(--accent);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;font-weight:900} .detail-row dd{margin:0;color:var(--text)} .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:4px 10px;margin:3px 4px 3px 0;color:var(--accent);background:var(--panel2)} a{color:var(--accent);word-break:break-word} ul{padding-left:1.2rem} .ok{color:var(--ok);font-weight:700} .queue-output{min-height:118px;white-space:pre-wrap;background:#090c11;border:1px solid var(--line);border-radius:14px;padding:12px;color:#d9e2f1;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px} .queue-actions,.action-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px} button{appearance:none;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:999px;min-height:40px;padding:8px 13px;font-weight:800;cursor:pointer} button:hover{border-color:var(--accent)} button.primary{background:linear-gradient(135deg,rgba(125,211,252,.25),rgba(167,139,250,.25));border-color:rgba(125,211,252,.55)} button.danger{color:#fecaca;border-color:rgba(252,165,165,.35)} .action-btn.modifier{border-style:dashed} .action-btn.selected{background:linear-gradient(135deg,rgba(134,239,172,.24),rgba(125,211,252,.22));border-color:rgba(134,239,172,.7)} .choice-group{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:10px;margin-top:12px} .choice-label{display:flex;justify-content:space-between;gap:12px;color:var(--accent);font-size:.85rem;font-weight:900;text-transform:uppercase;letter-spacing:.07em} .choice-label span{color:var(--muted);font-weight:700;text-transform:none;letter-spacing:0} textarea{width:100%;min-height:76px;margin-top:8px;border-radius:12px;border:1px solid var(--line);background:#090c11;color:var(--text);padding:10px;font:inherit} .note-label{display:block;margin-top:12px;color:var(--muted)} footer{color:var(--muted);border-top:1px solid var(--line);margin-top:22px;padding-top:14px}
+</style>
+</head>
+<body>
+<main>
+<header>
+<div class="meta">Dennis X bookmarks · public-sanitized · noindex</div>
+<h1>Dagens X bookmarks</h1>
+</header>
+<section class="card item-card" id="item-1">
+  <div class="meta">Item 1 · Rohit @rohit4verse · promote_to_gbrain_later</div>
+  <h2>You&#x27;re Not Slow. You&#x27;re Single-Threaded: A Complete Guide on Commanding 300 Agents from One Prompt</h2>
+  <dl class="detail-list"><div class="detail-row"><dt>Capture</dt><dd>Status: captured_full. Original source: https://x.com/rohit4verse/status/2059320043478081976. Source quality: X Article body recovered before report rendering (1/1) via TweetResultByRestId plaintext; cookies/tokens not stored..</dd></div><div class="detail-row"><dt>Summary</dt><dd>Rohit’s article argues that the real AI productivity bottleneck is not model quality but single-threaded work design, and proposes multi-agent swarms as the way to turn one human prompt into many parallel work queues. Main claims/details: A single agent handles tasks in a linear read-plan-act-check loop, which works for contained work but stalls when the job decomposes into many independent subtasks.; For wide tasks like evaluating many companies, serial execution wastes time and a single context window degrades as earlier findings fall out of memory.; The proposed fix is a swarm layout: multiple workers with separate context plus a coordinating agent, rather than one faster model doing one long chain.; The article frames AI leverage as replacing one human queue with many parallel queues while keeping the human as the decision-maker. Caveats/open questions: The excerpt supports the coordination thesis but does not show enough implementation detail to validate the “300 agents” claim.; The argument is persuasive but may overstate scale unless paired with concrete cost, failure, and review-control patterns.; What actual tooling or architecture does the article use for spawning, monitoring, and reviewing large numbers of agents?; Does the full article include practical guardrails for cost, duplicate work, hallucinated outputs, and final verification?</dd></div><div class="detail-row"><dt>Relevance</dt><dd>Existing context: No relevant GBrain hits returned. New/changed signal: New to the brain for this exact source, but conceptually aligned with Dennis’s existing interest in small-company-scale agent orchestration and builder/verifier/reviewer separation. The useful addition is the framing: throughput is a systems-layout problem, not a prompt-quality problem. Why it matters: This maps directly onto the shift from “use one strong model” to “design a coordination system”: parallel workers, isolated context, a lead/coordinator role, and verification layers. That is closer to Dennis’s AI-conductor direction than another generic model-ranking post. Dennis fit: High: this is basically the narrative version of why Hermes Kanban, subagents, cron jobs, and review lanes matter. It can help Dennis explain the move from solo prompting to agent-command systems in plain business language. Recommended action: Read once, then promote the core framing to GBrain as a reusable concept note on “single-threaded AI work vs agent swarms”; do not treat the “300 agents” headline literally until the implementation details are verified..</dd></div></dl>
+  <div class="choice-group"><div class="choice-label">Primary decision <span>choose one</span></div><div class="action-row"><button class="action-btn primary" data-item-id="1" data-action="ingest" data-choice-kind="primary" title="Make this durably represented in GBrain after local brain-first lookup.">Ingest</button><button class="action-btn primary" data-item-id="1" data-action="ignore" data-choice-kind="primary" title="Mark as low-signal/archive; do not revisit unless asked.">Ignore</button></div></div>
+  <div class="choice-group"><div class="choice-label">Add-ons <span>choose any</span></div><div class="action-row"><button class="action-btn modifier" data-item-id="1" data-action="try_later" data-choice-kind="modifier" title="Create a small experiment/spike candidate.">Test later</button><button class="action-btn modifier" data-item-id="1" data-action="skillify" data-choice-kind="modifier" title="Turn a reusable workflow into a Hermes skill candidate.">Skillify</button><button class="action-btn modifier" data-item-id="1" data-action="deep_research" data-choice-kind="modifier" title="Recover/read primary sources before deciding.">Deep research</button></div></div>
+  <label class="note-label">Optional note to Hermes<textarea data-note-for="1" placeholder="Kort begrunnelse"></textarea></label>
+</section><section class="card item-card" id="item-2">
+  <div class="meta">Item 2 · Tony Simons @tonysimons_ · make_skill_later</div>
+  <h2>How To Dominate Projects With Hermes Agent Kanban Board</h2>
+  <dl class="detail-list"><div class="detail-row"><dt>Capture</dt><dd>Status: captured_full. Original source: https://x.com/tonysimons_/status/2060527240098587085. Source quality: X Article body recovered before report rendering (1/1) via TweetResultByRestId plaintext; cookies/tokens not stored..</dd></div><div class="detail-row"><dt>Summary</dt><dd>Tony Simons’s article explains Hermes Agent Kanban as a durable coordination layer for agent work, arguing that boards, task state, profiles, logs, and receipts beat long chat transcripts for real multi-step projects. Main claims/details: The article argues that long-running work should not live inside one chat transcript because context windows do not provide durable project state.; Hermes Kanban is presented as a coordination system where boards isolate workstreams, tasks carry state, profiles define worker shape, parent links define order, and runs/logs/events provide receipts.; The author recommends starting with a minimal useful board setup rather than over-designing the first board.; The article specifically calls out deliberate board switching, board default workdirs, JSON output for task IDs, triage for underspecified requests, blocked status for human-decision gates, and max runtime limits as practical operating habits. Caveats/open questions: Command examples should be verified against Dennis’s installed Hermes version before becoming a skill or operating standard.; The article is written in a strong opinionated style; extract the workflow rules, not the hype.; Are the specific flags shown in the full article current for Dennis’s Hermes build?; Does the full article include review-lane or verifier patterns that should be merged into Dennis’s existing Kanban worker gu…</dd></div><div class="detail-row"><dt>Relevance</dt><dd>Existing context: No relevant GBrain hits returned. New/changed signal: New to the brain as a source, but strongly confirms Dennis’s current Hermes workflow assumptions. The value is in the concrete language and command-level heuristics: switch boards deliberately, set default workdirs, use JSON for IDs, triage mushy work, and block tasks that need human decisions. Why it matters: This is not just commentary; it is operational doctrine for Dennis’s stack. It names the exact failure mode Hermes Kanban is meant to solve: stale state, silent worker failure, wrong-board execution, and context soup disguised as progress. Dennis fit: Very high: Dennis already runs Hermes/Kanban-style workflows, and this article is a clean external articulation of why the board is the unit of management, not the agent or chat. It is also candidate material for improving internal Kanban operating instructions. Recommended action: Turn this into a Hermes Kanban operating reference or skill update after checking the actual command syntax against current Hermes docs; prioritize the parts about board switching, default workdirs, receipts, triage, blocked status, and max runtime..</dd></div></dl>
+  <div class="choice-group"><div class="choice-label">Primary decision <span>choose one</span></div><div class="action-row"><button class="action-btn primary" data-item-id="2" data-action="ingest" data-choice-kind="primary" title="Make this durably represented in GBrain after local brain-first lookup.">Ingest</button><button class="action-btn primary" data-item-id="2" data-action="ignore" data-choice-kind="primary" title="Mark as low-signal/archive; do not revisit unless asked.">Ignore</button></div></div>
+  <div class="choice-group"><div class="choice-label">Add-ons <span>choose any</span></div><div class="action-row"><button class="action-btn modifier" data-item-id="2" data-action="try_later" data-choice-kind="modifier" title="Create a small experiment/spike candidate.">Test later</button><button class="action-btn modifier" data-item-id="2" data-action="skillify" data-choice-kind="modifier" title="Turn a reusable workflow into a Hermes skill candidate.">Skillify</button><button class="action-btn modifier" data-item-id="2" data-action="deep_research" data-choice-kind="modifier" title="Recover/read primary sources before deciding.">Deep research</button></div></div>
+  <label class="note-label">Optional note to Hermes<textarea data-note-for="2" placeholder="Kort begrunnelse"></textarea></label>
+</section>
+<section class="queue" id="copy-command"><h2>Kopier kommando til Hermes</h2><div id="queueOutput" class="queue-output">Velg en action på et item.</div><div class="queue-actions"><button id="copyCommand" class="primary">Copy command</button><button id="clearActions" class="danger">Clear</button></div><p class="small">Copy/export only. Ingen webhook, ingen network call, ingen automatisk GBrain-mutasjon. Kommandoen inneholder bare report-id, public=true, itemnummer, tittel og valgte actions — ingen lokale paths.</p></section>
+<footer>Publish mode: public_sanitized_github_pages. GBrain mutation: none. X actions: none. Raw local report/action board were not published.</footer>
+</main>
+<script>
+const XBM_DATA = {
+  "meta": {
+    "report_id": "2026-05-31--0600--x-bookmarks-research-brief",
+    "public": true,
+    "mode": "public_sanitized_action_board_copy_only"
+  },
+  "items": [
+    {
+      "id": 1,
+      "title": "You're Not Slow. You're Single-Threaded: A Complete Guide on Commanding 300 Agents from One Prompt",
+      "author": "Rohit @rohit4verse",
+      "bucket": "promote_to_gbrain_later",
+      "url": "https://x.com/rohit4verse/status/2059320043478081976"
+    },
+    {
+      "id": 2,
+      "title": "How To Dominate Projects With Hermes Agent Kanban Board",
+      "author": "Tony Simons @tonysimons_",
+      "bucket": "make_skill_later",
+      "url": "https://x.com/tonysimons_/status/2060527240098587085"
+    }
+  ],
+  "actions": [
+    {
+      "id": "ingest",
+      "label": "Ingest",
+      "kind": "primary",
+      "hint": "Make this durably represented in GBrain after local brain-first lookup."
+    },
+    {
+      "id": "ignore",
+      "label": "Ignore",
+      "kind": "primary",
+      "hint": "Mark as low-signal/archive; do not revisit unless asked."
+    },
+    {
+      "id": "try_later",
+      "label": "Test later",
+      "kind": "modifier",
+      "hint": "Create a small experiment/spike candidate."
+    },
+    {
+      "id": "skillify",
+      "label": "Skillify",
+      "kind": "modifier",
+      "hint": "Turn a reusable workflow into a Hermes skill candidate."
+    },
+    {
+      "id": "deep_research",
+      "label": "Deep research",
+      "kind": "modifier",
+      "hint": "Recover/read primary sources before deciding."
+    }
+  ]
+};
+const selections = new Map();
+const PRIMARY_ACTIONS = new Set(XBM_DATA.actions.filter(action => action.kind === 'primary').map(action => action.id));
+const MODIFIER_ACTIONS = new Set(XBM_DATA.actions.filter(action => action.kind === 'modifier').map(action => action.id));
+function itemById(id) { return XBM_DATA.items.find(item => String(item.id) === String(id)); }
+function blankSelection() { return { primary_action: null, modifier_actions: [], note: '' }; }
+function hasSelection(state) { return Boolean(state.primary_action || state.modifier_actions.length || (state.note || '').trim()); }
+function itemDecisions() {
+  return Array.from(selections.entries()).map(([itemId, state]) => {
+    const item = itemById(itemId);
+    return { item_id: Number(itemId), primary_action: state.primary_action || null, modifier_actions: [...state.modifier_actions], title: item?.title || '', author: item?.author || '', bucket: item?.bucket || '', url: item?.url || '', note: state.note || '' };
+  }).filter(decision => decision.primary_action || decision.modifier_actions.length || decision.note).sort((a, b) => a.item_id - b.item_id);
+}
+function buildPayload() { return { source: 'x-bookmarks-research-brief', mode: 'public_intent_queue_copy_only', selection_model: 'one_primary_plus_many_modifiers', report_id: XBM_DATA.meta.report_id, public: true, created_at: new Date().toISOString(), item_decisions: itemDecisions() }; }
+function buildCommand(payload) {
+  if (!payload.item_decisions.length) return 'Velg minst én action først.';
+  const lines = [`xbm actions report="${payload.report_id}" public=true`, ''];
+  for (const decision of payload.item_decisions) {
+    const labels = [];
+    if (decision.primary_action) labels.push(decision.primary_action);
+    labels.push(...decision.modifier_actions);
+    const note = decision.note ? ` note="${decision.note.replaceAll('"', '\"')}"` : '';
+    lines.push(`- item ${decision.item_id}: ${labels.join(' + ')} — ${decision.title}${note}`);
+  }
+  return lines.join('\n');
+}
+function updateButtons() {
+  document.querySelectorAll('.action-btn').forEach(button => {
+    const itemId = button.dataset.itemId;
+    const action = button.dataset.action;
+    const kind = button.dataset.choiceKind;
+    const state = selections.get(itemId);
+    const active = Boolean(state && ((kind === 'primary' && state.primary_action === action) || (kind === 'modifier' && state.modifier_actions.includes(action))));
+    button.classList.toggle('selected', active);
+    button.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+}
+function updateQueue() { document.getElementById('queueOutput').textContent = buildCommand(buildPayload()); updateButtons(); }
+document.querySelectorAll('.action-btn').forEach(button => {
+  button.addEventListener('click', () => {
+    const itemId = button.dataset.itemId;
+    const action = button.dataset.action;
+    const kind = button.dataset.choiceKind;
+    const noteNode = document.querySelector(`textarea[data-note-for="${itemId}"]`);
+    const state = selections.get(itemId) || blankSelection();
+    if (kind === 'primary' && PRIMARY_ACTIONS.has(action)) state.primary_action = state.primary_action === action ? null : action;
+    else if (kind === 'modifier' && MODIFIER_ACTIONS.has(action)) state.modifier_actions = state.modifier_actions.includes(action) ? state.modifier_actions.filter(existing => existing !== action) : [...state.modifier_actions, action];
+    state.note = noteNode?.value || '';
+    if (hasSelection(state)) selections.set(itemId, state); else selections.delete(itemId);
+    updateQueue();
+  });
+});
+document.querySelectorAll('textarea[data-note-for]').forEach(textarea => textarea.addEventListener('input', () => {
+  const itemId = textarea.dataset.noteFor;
+  const state = selections.get(itemId) || blankSelection();
+  state.note = textarea.value;
+  if (hasSelection(state)) selections.set(itemId, state); else selections.delete(itemId);
+  updateQueue();
+}));
+document.getElementById('copyCommand').addEventListener('click', async () => {
+  const text = buildCommand(buildPayload());
+  try { await navigator.clipboard.writeText(text); } catch (error) { document.getElementById('queueOutput').textContent = text; }
+});
+document.getElementById('clearActions').addEventListener('click', () => { selections.clear(); document.querySelectorAll('textarea[data-note-for]').forEach(node => node.value = ''); updateQueue(); });
+updateQueue();
+</script>
+</body>
+</html>
